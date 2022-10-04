@@ -9,6 +9,11 @@ class Topic extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'order'
+    ];
+
     public function providers() {
         return $this->hasMany(Provider::class);
     }

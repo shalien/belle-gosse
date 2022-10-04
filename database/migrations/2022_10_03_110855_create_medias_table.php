@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('medias', function (Blueprint $table) {
             $table->id();
+            $table->string('source')->unique();
+            $table->string('media')->unique();
+            $table->string('destination')->unique();
             $table->timestamps();
         });
     }

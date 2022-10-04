@@ -9,6 +9,10 @@ class Provider extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'type',
+        'link'
+    ];
 
     public function topic() {
         return $this->hasOne(Topic::class);

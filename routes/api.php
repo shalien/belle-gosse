@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\TopicController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,9 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(TopicController::class)->group(function () {
-           Route::get('/topics', 'show');
-           Route::post('/topics', 'store');
+Route::controller(TopicController::class)->prefix('topics')->group(function () {
+           Route::get('/', 'index');
+           Route::get('/{topic}', 'show');
+           Route::put('/{topic}', 'update');
+           Route::post('/', 'store');
 });
 
+Route::controller(ProviderController::class)->prefix('providers')->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+});
 
+Route::controller(MediaController::class)->prefix('medias')->group(function () {
+    Route::get('/', 'index');
+    Route::post('/', 'store');
+});

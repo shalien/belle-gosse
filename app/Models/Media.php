@@ -9,6 +9,10 @@ class Media extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+
+    ];
+
 
     public function provider() {
         return $this->hasOne(Provider::class);
