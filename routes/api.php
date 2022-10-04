@@ -15,12 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-Route::middleware('auth:sanctum')->group(function() {
-
-    Route::controller(TopicController::class)->group(function () {
-            Route::get('/topics', 'show');
-    });
-
+Route::controller(TopicController::class)->group(function () {
+           Route::get('/topics', 'show');
+           Route::post('/topics', 'store');
 });
+
+
