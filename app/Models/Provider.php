@@ -15,7 +15,7 @@ class Provider extends Model
     ];
 
     public function topic() {
-        return $this->hasOne(Topic::class);
+        return $this->belongsTo(Topic::class);
     }
 
     public function medias() {

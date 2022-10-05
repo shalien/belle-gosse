@@ -13,7 +13,10 @@ class ProviderController extends Controller
     //
 
     public function index() {
-        return JsonResponse::fromJsonString(Provider::all());
+
+        $providers = Provider::all();
+
+        return JsonResponse::fromJsonString(json_encode($providers));
     }
 
     public function store(StoreRequest $request)

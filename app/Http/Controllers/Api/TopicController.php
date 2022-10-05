@@ -46,6 +46,8 @@ class TopicController extends Controller
      */
     public function store(StoreRequest $request) {
 
+        $topic = null;
+
         try {
             DB::beginTransaction();
 
@@ -60,7 +62,7 @@ class TopicController extends Controller
 
         DB::commit();
 
-        return response(null, 200);
+        return response(json_encode(['id' => $topic->id]), 200);
     }
 
     /**
