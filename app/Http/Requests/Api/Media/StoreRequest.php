@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\Provider;
+namespace App\Http\Requests\Api\Media;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -25,9 +25,10 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'type' => 'required|string',
-            'link' => 'required|string|unique:providers',
-            'topic_id' => 'required|numeric'
+            'source' => 'required|string',
+            'media' => 'required|string',
+            'destination' => 'required|string',
+            'provider_id' => 'required|numeric'
         ];
     }
 }

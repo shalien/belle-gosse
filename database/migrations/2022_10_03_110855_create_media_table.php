@@ -13,12 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('medias', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->string('source')->unique();
             $table->string('media')->unique();
             $table->string('destination')->unique();
             $table->timestamps();
+
+            $table->index(['media', 'destination']);
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medias');
+        Schema::dropIfExists('media');
     }
 };

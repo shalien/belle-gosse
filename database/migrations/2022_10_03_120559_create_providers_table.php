@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('type');
             $table->string('link');
             $table->timestamps();
+
+            $table->index(['type', 'link']);
         });
     }
 

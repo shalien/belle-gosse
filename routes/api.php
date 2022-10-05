@@ -17,19 +17,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(TopicController::class)->prefix('topics')->group(function () {
-           Route::get('/', 'index');
-           Route::get('/{topic}', 'show');
-           Route::put('/{topic}', 'update');
-           Route::post('/', 'store');
-});
 
-Route::controller(ProviderController::class)->prefix('providers')->group(function () {
-    Route::get('/', 'index');
-    Route::post('/', 'store');
-});
+Route::group(['excluded_middleware' => 'throttle:api'], function () {
 
-Route::controller(MediaController::class)->prefix('medias')->group(function () {
-    Route::get('/', 'index');
-    Route::post('/', 'store');
+    Route::controller(TopicController::class)->prefix('topics')->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{topic}', 'show');
+        Route::put('/{topic}', 'update');
+        Route::post('/', 'store');
+    });
+
+    Route::controller(ProviderController::class)->prefix('providers')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::get('/topic/{topic}', 'byTopicId');
+    });
+
+    Route::controller(MediaController::class)->prefix('medias')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+    });
 });

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->integer('order');
             $table->timestamps();
+
+            $table->index(['name']);
         });
     }
 
