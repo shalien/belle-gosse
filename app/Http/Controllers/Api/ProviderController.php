@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Provider\DeleteRequest;
 use App\Http\Requests\Api\Provider\StoreRequest;
 use App\Models\Provider;
 use App\Models\Topic;
@@ -46,5 +47,23 @@ class ProviderController extends Controller
         DB::commit();
 
         return response(json_encode(['id' => $provider->id]), 200);
+    }
+
+
+    public function delete(Provider $provider) {
+
+
+        try {
+            DB::beginTransaction();
+
+            $provider->delete();
+
+        }catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+
     }
 }
