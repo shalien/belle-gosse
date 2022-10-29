@@ -25,9 +25,9 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'source' => 'required|string',
-            'media' => 'required|string',
-            'destination' => 'required|string',
+            'source' => 'required|string|unique:media',
+            'media' => 'required|string|unique:media',
+            'destination' => 'required|string|unique:media',
             'provider_id' => 'required|numeric'
         ];
     }

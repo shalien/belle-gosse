@@ -25,16 +25,19 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::get('/{topic}', 'show');
         Route::put('/{topic}', 'update');
         Route::post('/', 'store');
+        Route::delete('/{topic}', 'destroy');
     });
 
     Route::controller(ProviderController::class)->prefix('providers')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::get('/topic/{topic}', 'byTopicId');
+        Route::delete('/{provider}', 'destroy');
     });
 
     Route::controller(MediaController::class)->prefix('medias')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
+        Route::delete('/{media}', 'destroy');
     });
 });
