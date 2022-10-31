@@ -50,7 +50,7 @@ class ProviderController extends Controller
     }
 
 
-    public function delete(Provider $provider) {
+    public function destroy(Provider $provider) {
 
 
         try {
