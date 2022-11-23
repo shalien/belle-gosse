@@ -12,7 +12,8 @@ class Provider extends Model
     protected $fillable = [
         'type',
         'link',
-        'topic_id'
+        'topic_id',
+        'prefix'
     ];
 
     public function topic() {
