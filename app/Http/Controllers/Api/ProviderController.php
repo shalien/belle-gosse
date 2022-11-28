@@ -22,6 +22,10 @@ class ProviderController extends Controller
         return JsonResponse::fromJsonString(json_encode($providers));
     }
 
+    public function show(Provider $provider) {
+        return $provider->toJson();
+    }
+
     public function byTopicId(Topic $topic) {
         $providers = Provider::all()->where('topic_id' ,'=', $topic->id);
 

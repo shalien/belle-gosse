@@ -31,6 +31,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
     Route::controller(ProviderController::class)->prefix('providers')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
+        Route::get('/{provider}', 'show');
         Route::get('/topic/{topic}', 'byTopicId');
         Route::delete('/{provider}', 'destroy');
     });
