@@ -26,7 +26,7 @@ class StoreRequest extends FormRequest
         return [
             //
             'type' => 'required|string',
-            'link' => 'required|string|unique:providers',
+            'link' => 'required|string',
             'topic_id' => 'required|numeric'
         ];
     }
