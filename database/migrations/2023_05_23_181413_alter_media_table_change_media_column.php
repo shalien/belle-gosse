@@ -17,6 +17,7 @@ return new class extends Migration
             //
             $table->dropIndex(['media', 'destination']);
             $table->dropUnique(['destination']);
+            $table->dropUnique(['media']);
       //
         });
     }
