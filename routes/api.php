@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\TopicController;
+use App\Http\Controllers\Api\UnmanagedRedditHostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,5 +41,10 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::delete('/{media}', 'destroy');
+    });
+
+    Route::controller(UnmanagedRedditHostController::class)->prefix('unmanagedreddithosts')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
     });
 });
