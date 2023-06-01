@@ -58,14 +58,13 @@ class ProviderTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ProviderType $providerType
+     * @return string
      */
-    public function show($id)
+    public function show(ProviderType $providerType)
     {
         //
-
-
+        return $providerType->toJson();
     }
 
     /**
