@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\IgnoredHostController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\ProviderController;
+use App\Http\Controllers\Api\ProviderTypeController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UnmanagedRedditHostController;
 use Illuminate\Support\Facades\Route;
@@ -53,4 +54,12 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::post('/', 'store');
         Route::delete('/{ignored_host}', 'destroy');
     });
+
+    Route::controller(ProviderTypeController::class)->prefix('providertypes')->group(
+        function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store');
+            Route::get('/{provider_type}', 'show');
+        }
+    );
 });
