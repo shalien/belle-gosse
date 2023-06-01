@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\IgnoredHostController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UnmanagedRedditHostController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,5 +46,11 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
     Route::controller(UnmanagedRedditHostController::class)->prefix('unmanagedreddithosts')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
+    });
+
+    Route::controller(IgnoredHostController::class)->prefix('ignoredhosts')->group(function() {
+        Route::get('/', 'index');
+        Route::post('/', 'store');
+        Route::delete('/{ignored_host}', 'destroy');
     });
 });

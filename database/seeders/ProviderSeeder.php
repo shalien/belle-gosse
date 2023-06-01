@@ -23,10 +23,10 @@ class ProviderSeeder extends Seeder
          */
         //
         DB::table('providers')->insert([
-            'type' => 'reddit',
             'link' => 'https://reddit.com/r/cats',
             'topic_id' => 1,
-            'prefix' => ''
+            'prefix' => '',
+            'provider_type_id' => 1
         ]);
     }
 }
