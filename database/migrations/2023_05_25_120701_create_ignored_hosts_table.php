@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -15,7 +16,8 @@ return new class extends Migration
     {
         Schema::create('ignored_hosts', function (Blueprint $table) {
             $table->id();
-            $table->longText('host')->unique()->index();
+            $table->longText('host')->unique();
+            $table->index([DB::raw('host(750)')]);
             $table->timestamps();
         });
     }
