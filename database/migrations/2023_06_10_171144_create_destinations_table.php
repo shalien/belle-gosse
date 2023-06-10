@@ -16,8 +16,7 @@ return new class extends Migration
     {
         Schema::create('destinations', function (Blueprint $table) {
             $table->id();
-            $table->longText('filename')->unique();
-            $table->index([DB::raw('fliename(750)')]);
+            $table->string('filename', 2048)->unique();
             $table->timestamps();
         });
     }

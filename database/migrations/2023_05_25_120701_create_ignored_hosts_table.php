@@ -16,8 +16,7 @@ return new class extends Migration
     {
         Schema::create('ignored_hosts', function (Blueprint $table) {
             $table->id();
-            $table->longText('host')->unique();
-            $table->index([DB::raw('host(750)')]);
+            $table->string('host', 2048)->unique();
             $table->timestamps();
         });
     }

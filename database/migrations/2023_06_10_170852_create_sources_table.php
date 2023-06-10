@@ -16,8 +16,7 @@ return new class extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
-            $table->longText('link')->unique();
-            $table->index([DB::raw('link(750)')]);
+            $table->string('link', 2048)->unique();
             $table->timestamps();
         });
     }
