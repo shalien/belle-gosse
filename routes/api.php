@@ -36,6 +36,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::get('/{provider}', 'show');
         Route::get('/topic/{topic}', 'byTopicId');
         Route::delete('/{provider}', 'destroy');
+        Route::get('/{provider}', 'medias');
     });
 
     Route::controller(MediaController::class)->prefix('medias')->group(function () {

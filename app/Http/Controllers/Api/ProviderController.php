@@ -32,6 +32,10 @@ class ProviderController extends Controller
         return json_encode($providers);
     }
 
+    public function medias(Provider $provider) {
+        return $provider->medias()->toJson();
+    }
+
     public function store(StoreRequest $request)
     {
 
