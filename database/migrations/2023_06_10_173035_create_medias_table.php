@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('medias', function (Blueprint $table) {
             $table->id();
-            $table->string('link', 2048)->unique();
+            $table->string('link',)->unique();
             $table->timestamps();
         });
     }
