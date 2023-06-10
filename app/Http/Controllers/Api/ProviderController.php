@@ -33,7 +33,7 @@ class ProviderController extends Controller
     }
 
     public function medias(Provider $provider) {
-        return $provider->medias()->toJson();
+        return $provider->medias->toJson();
     }
 
     public function store(StoreRequest $request)
