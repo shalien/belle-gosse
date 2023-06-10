@@ -9,15 +9,14 @@ class Media extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'source',
-        'media',
-        'destination',
-        'provider_id'
-    ];
+    protected $fillable = ['link'];
 
 
-    public function provider() {
-        return $this->belongsTo(Provider::class);
+    public function source() {
+        return $this->belongsTo(Source::class);
+    }
+
+    public function destination() {
+        return $this->belongsTo(Destination::class);
     }
 }

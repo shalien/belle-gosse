@@ -3,45 +3,53 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\IgnoredHost\ShowRequest;
-use App\Http\Requests\Api\IgnoredHost\StoreRequest;
+use App\Http\Requests\Api\Source\StoreRequest;
 use App\Models\IgnoredHost;
-use App\Models\Provider;
+use App\Models\Source;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
-class IgnoredHostController extends Controller
+class SourceController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response|string
+     * @return string
      */
     public function index()
     {
         //
-        return IgnoredHost::all()->toJson();
+        return Source::all()->toJson();
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRequest $request
-     * @return Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
     {
         //
-        $ignored_host = null;
+
+        $source = null;
 
         try {
             DB::beginTransaction();
 
-            $ignored_host = IgnoredHost::create($request->validated());
+            $source = Source::create($request->validated());
 
-            $ignored_host->save();
+            $source->save();
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
@@ -49,21 +57,18 @@ class IgnoredHostController extends Controller
 
         DB::commit();
 
-        return response(json_encode(['id' => $ignored_host->id]), 200);
-
+        return response(json_encode(['id' => $source->id]), 200);
     }
 
     /**
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return string
+     * @return \Illuminate\Http\Response
      */
-    public function show(IgnoredHost $ignoredHost)
+    public function show($id)
     {
         //
-        return $ignoredHost->toJson();
-
     }
 
     /**
@@ -74,6 +79,7 @@ class IgnoredHostController extends Controller
      */
     public function edit($id)
     {
+        //
     }
 
     /**
@@ -94,9 +100,8 @@ class IgnoredHostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(IgnoredHost $ignoredHost)
+    public function destroy($id)
     {
         //
-        $ignoredHost->delete();
     }
 }

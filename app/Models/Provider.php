@@ -24,7 +24,7 @@ class Provider extends Model
         return $this->belongsTo(Topic::class);
     }
 
-    public function medias() {
-        return $this->hasMany(Media::class);
+    public function sources() {
+        return $this->hasMany(Source::class);
     }
 }
