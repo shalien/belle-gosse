@@ -73,6 +73,8 @@ class SourceController extends Controller
 
     public function getByLink($link) {
 
+        $link = base64_decode($link);
+
         $source = Source::all()->where('link', '=', $link)->firstOrFail();
 
         return json_encode($source);
