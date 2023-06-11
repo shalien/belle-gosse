@@ -57,7 +57,7 @@ class SourceController extends Controller
 
         DB::commit();
 
-        return response(json_encode(['id' => $source->id]), 200);
+        return response(json_encode(['id' => $source->id]));
     }
 
     /**
@@ -73,11 +73,8 @@ class SourceController extends Controller
 
     public function getByLink($link) {
 
-        $link = base64_decode($link);
 
-        $source = Source::all()->where('link', '=', $link)->firstOrFail();
-
-        return json_encode($source);
+        return Source::where('link', '=', base64_decode($link))->findOrFail();
 
     }
 
