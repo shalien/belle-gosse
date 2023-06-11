@@ -52,7 +52,7 @@ class SourceController extends Controller
             $source->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return response(json_encode($e));
         }
 
         DB::commit();
@@ -69,6 +69,14 @@ class SourceController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function getByLink($link) {
+
+        $source = Source::all()->where('link', '=', $link)->firstOrFail();
+
+        return json_encode($source);
+
     }
 
     /**
