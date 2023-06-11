@@ -33,7 +33,7 @@ class MediaController extends Controller
 
         DB::commit();
 
-        return response(json_encode(['id' => $media->id]), 200);
+        return response(json_encode(['id' => $media->id]));
     }
 
     public function getByMedia() {
