@@ -14,16 +14,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('sources', function (Blueprint $table) {
+        Schema::table('medias', function (Blueprint $table) {
             //
-            $table->dropUnique('sources_link_unique');
+
+            $table->dropUnique('medias_link_unique');
 
             $table->longText('link')->change();
 
             switch(DB::getDriverName()) {
                 case 'mysql':
                 case 'mariadb':
-                    DB::statement('ALTER TABLE sources ADD UNIQUE `sources_link_unique` (`link`(255));');
+                    DB::statement('ALTER TABLE medias ADD UNIQUE `medias_link_unique` (`link`(255));');
                     break;
                 default:
                     $table->unique('link');
@@ -39,7 +40,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('sources', function (Blueprint $table) {
+        Schema::table('medias', function (Blueprint $table) {
             //
         });
     }
