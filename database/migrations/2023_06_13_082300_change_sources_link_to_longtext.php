@@ -17,7 +17,7 @@ return new class extends Migration
             //
             $table->dropUnique('sources_link_unique');
 
-            $table->longText('link')->change();
+            $table->text('link')->change();
 
             $table->unique('link');
         });
