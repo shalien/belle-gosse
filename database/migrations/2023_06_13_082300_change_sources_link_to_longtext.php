@@ -16,10 +16,6 @@ return new class extends Migration
         Schema::table('sources', function (Blueprint $table) {
             //
             $table->dropUnique('sources_link_unique');
-
-            $table->text('link')->change();
-
-            $table->unique('link');
         });
     }
 

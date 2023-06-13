@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('medias', function (Blueprint $table) {
+        Schema::table('sources', function (Blueprint $table) {
             //
-
-            $table->dropUnique('medias_link_unique');
-
-            $table->longText('link')->change();
+            $table->text('link')->change();
 
             $table->unique('link');
-
         });
     }
 
@@ -32,7 +28,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('medias', function (Blueprint $table) {
+        Schema::table('sources', function (Blueprint $table) {
             //
         });
     }
