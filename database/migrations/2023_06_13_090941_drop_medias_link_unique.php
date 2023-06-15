@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     /**
@@ -11,11 +12,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        $medias = DB::table('media')->select('source', 'provider_id')->get();
-
-        foreach ($medias as $media) {
-            DB::table('sources')->where('link', $media->source)->update(['provider_id' => $media->provider_id]);
-        }
+        Schema::table('medias', function (Blueprint $table) {
+            //
+            $table->dropUnique('medias_link_unique');
+        });
     }
 
     /**
@@ -25,5 +25,8 @@ return new class extends Migration {
      */
     public function down()
     {
+        Schema::table('medias', function (Blueprint $table) {
+            //
+        });
     }
 };

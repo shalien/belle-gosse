@@ -11,14 +11,16 @@ class Media extends Model
 
     protected $fillable = ['link'];
 
-    protected  $table = 'medias';
+    protected $table = 'medias';
 
 
-    public function source() {
+    public function source()
+    {
         return $this->belongsTo(Source::class);
     }
 
-    public function destination() {
+    public function destination()
+    {
         return $this->belongsTo(Destination::class);
     }
 }

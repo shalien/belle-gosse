@@ -3,36 +3,38 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Provider\DeleteRequest;
 use App\Http\Requests\Api\Provider\StoreRequest;
 use App\Models\Provider;
 use App\Models\Topic;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProviderController extends Controller
 {
     //
 
-    public function index() {
+    public function index()
+    {
 
         $providers = Provider::all();
 
         return JsonResponse::fromJsonString(json_encode($providers));
     }
 
-    public function show(Provider $provider) {
+    public function show(Provider $provider)
+    {
         return $provider->toJson();
     }
 
-    public function byTopicId(Topic $topic) {
-        $providers = Provider::all()->where('topic_id' ,'=', $topic->id);
+    public function byTopicId(Topic $topic)
+    {
+        $providers = Provider::all()->where('topic_id', '=', $topic->id);
 
         return json_encode($providers);
     }
 
-    public function medias(Provider $provider) {
+    public function medias(Provider $provider)
+    {
         return $provider->medias->toJson();
     }
 
@@ -58,7 +60,8 @@ class ProviderController extends Controller
     }
 
 
-    public function destroy(Provider $provider) {
+    public function destroy(Provider $provider)
+    {
 
 
         try {
@@ -66,7 +69,7 @@ class ProviderController extends Controller
 
             $provider->delete();
 
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
         }

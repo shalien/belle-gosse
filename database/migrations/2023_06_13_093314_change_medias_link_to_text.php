@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -17,11 +16,10 @@ return new class extends Migration
         Schema::table('medias', function (Blueprint $table) {
             //
 
-            $table->dropUnique('medias_link_unique');
 
             $table->longText('link')->change();
 
-            switch(DB::getDriverName()) {
+            switch (DB::getDriverName()) {
                 case 'mysql':
                 case 'mariadb':
                     DB::statement('ALTER TABLE medias ADD UNIQUE `medias_link_unique` (`link`(255));');

@@ -11,7 +11,8 @@ class IgnoredHost extends Model
 
     protected $fillable = ['host', 'url'];
 
-    public function provider_type() {
+    public function provider_type()
+    {
         return $this->belongsToMany(ProviderType::class);
     }
 }

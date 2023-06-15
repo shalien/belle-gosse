@@ -3,21 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Media\FindByLinkRequest;
 use App\Http\Requests\Api\Media\StoreRequest;
 use App\Models\Media;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
 {
     //
 
-    public function index() {
+    public function index()
+    {
         return json_encode(Media::all());
     }
 
 
-    public function store(StoreRequest $request) {
+    public function store(StoreRequest $request)
+    {
         $media = null;
 
         try {
@@ -36,7 +38,16 @@ class MediaController extends Controller
         return response(json_encode(['id' => $media->id]));
     }
 
-    public function getByMedia() {
+    /**
+     * @param FindByLinkRequest $request
+     * @return string
+     */
+    public function findByLink(FindByLinkRequest $request): string
+    {
+        $url = urldecode($request->validated(['url']));
 
+        $media = Media::all()->where('link', 'like', "%{$url}%")->first;
+
+        return $media->toJson();
     }
 }

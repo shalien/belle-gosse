@@ -2,16 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Api\Topic\UpdateRequest;
-use App\Models\Topic;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Topic\StoreRequest;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Routing\ResponseFactory;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
+use App\Http\Requests\Api\Topic\UpdateRequest;
+use App\Models\Topic;
+use Illuminate\{Contracts\Foundation\Application, Contracts\Routing\ResponseFactory, Http\Response, Support\Facades\DB};
 
 class TopicController extends Controller
 {
@@ -24,8 +19,14 @@ class TopicController extends Controller
      * @param Topic $topic
      * @return string
      */
-    public function show(Topic $topic) {
+    public function show(Topic $topic)
+    {
         return $topic->toJson();
+    }
+
+    public function showWithProviders(Topic $topic)
+    {
+        return $topic->load('providers')->toJson();
     }
 
     /***
@@ -33,7 +34,8 @@ class TopicController extends Controller
      *
      * @return string
      */
-    public function index() {
+    public function index()
+    {
         return Topic::all()->toJson();
     }
 
@@ -44,7 +46,8 @@ class TopicController extends Controller
      * @param StoreRequest $request
      * @return Application|ResponseFactory|Response
      */
-    public function store(StoreRequest $request) {
+    public function store(StoreRequest $request)
+    {
 
         $topic = null;
 
@@ -70,7 +73,8 @@ class TopicController extends Controller
      * @param Topic $topic
      * @return Application|ResponseFactory|Response
      */
-    public function update(UpdateRequest $request, Topic $topic) {
+    public function update(UpdateRequest $request, Topic $topic)
+    {
 
         try {
             DB::beginTransaction();;

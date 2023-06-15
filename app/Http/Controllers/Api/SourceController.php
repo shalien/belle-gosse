@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\Source\FindByLinkRequest;
 use App\Http\Requests\Api\Source\StoreRequest;
-use App\Models\IgnoredHost;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,20 +22,24 @@ class SourceController extends Controller
         return Source::all()->toJson();
     }
 
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param FindByLinkRequest $request
+     * @return string
      */
-    public function create()
+    public function findByLink(FindByLinkRequest $request): string
     {
-        //
+        $url = urldecode($request->validated(['url']));
+
+        $source = Source::all()->where('link', 'like', "%{$url}%")->first;
+
+        return $source->toJson();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreRequest $request)
@@ -63,7 +67,7 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -71,11 +75,12 @@ class SourceController extends Controller
         //
     }
 
-    public function getByLink($link) {
+    public function getByLink($link)
+    {
 
-        $source = Source::all()->where('link', '=', base64_decode($link))->first();
+        $source = Source::all()->where('link', '=', urldecode($link))->first();
 
-        if($source == null) {
+        if ($source == null) {
             return response(status: 404);
         } else {
             return $source->toJson();
@@ -85,7 +90,7 @@ class SourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -96,8 +101,8 @@ class SourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -108,7 +113,7 @@ class SourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

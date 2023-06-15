@@ -12,7 +12,8 @@ class Source extends Model
     protected $fillable = ['link', 'provider_id'];
 
 
-    public function medias() {
+    public function medias()
+    {
         return $this->hasMany(Media::class);
     }
 }

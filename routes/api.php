@@ -27,6 +27,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
     Route::controller(TopicController::class)->prefix('topics')->group(function () {
         Route::get('/', 'index');
         Route::get('/{topic}', 'show');
+        Route::get('/{topic}/providers', 'showWithProviders');
         Route::put('/{topic}', 'update');
         Route::post('/', 'store');
         Route::delete('/{topic}', 'destroy');
@@ -45,6 +46,8 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::delete('/{media}', 'destroy');
+        Route::get('/{url}', 'findByLink');
+
     });
 
     Route::controller(UnmanagedRedditHostController::class)->prefix('unmanagedreddithosts')->group(function () {
@@ -52,7 +55,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::post('/', 'store');
     });
 
-    Route::controller(IgnoredHostController::class)->prefix('ignoredhosts')->group(function() {
+    Route::controller(IgnoredHostController::class)->prefix('ignoredhosts')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::get('/{ignored_host}', 'show');
@@ -71,7 +74,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         function () {
             Route::get('/', 'index');
             Route::post('/', 'store');
-            Route::get('/{link}', 'getByLink');
+            Route::get('/{url}', 'findByLink');
         }
     );
 

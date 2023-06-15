@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
@@ -11,7 +12,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::rename('medias', 'media');
+        Schema::table('sources', function (Blueprint $table) {
+            //
+            $table->dropUnique('sources_link_unique');
+        });
     }
 
     /**
@@ -21,5 +25,8 @@ return new class extends Migration {
      */
     public function down()
     {
+        Schema::table('sources', function (Blueprint $table) {
+            //
+        });
     }
 };

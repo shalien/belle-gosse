@@ -14,7 +14,8 @@ class Topic extends Model
         'order'
     ];
 
-    public function providers() {
+    public function providers()
+    {
         return $this->hasMany(Provider::class);
     }
 }

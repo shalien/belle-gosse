@@ -16,15 +16,18 @@ class Provider extends Model
         'provider_type_id'
     ];
 
-    public function type() {
+    public function type()
+    {
         return $this->belongsTo(ProviderType::class);
     }
 
-    public function topic() {
+    public function topic()
+    {
         return $this->belongsTo(Topic::class);
     }
 
-    public function sources() {
+    public function sources()
+    {
         return $this->hasMany(Source::class);
     }
 }

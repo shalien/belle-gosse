@@ -11,7 +11,8 @@ class Destination extends Model
 
     protected $fillable = ['filename'];
 
-    public function medias() {
+    public function medias()
+    {
         return $this->hasMany(Media::class);
     }
 }

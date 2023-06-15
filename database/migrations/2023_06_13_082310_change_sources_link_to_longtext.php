@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -20,7 +19,7 @@ return new class extends Migration
 
             $table->longText('link')->change();
 
-            switch(DB::getDriverName()) {
+            switch (DB::getDriverName()) {
                 case 'mysql':
                 case 'mariadb':
                     DB::statement('ALTER TABLE sources ADD UNIQUE `sources_link_unique` (`link`(255));');
