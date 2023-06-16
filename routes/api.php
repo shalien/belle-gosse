@@ -46,7 +46,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::delete('/{media}', 'destroy');
-        Route::get('/{url}', 'findByLink');
+        Route::get('/{hash}', 'findByLink');
 
     });
 

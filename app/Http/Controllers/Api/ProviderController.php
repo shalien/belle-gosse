@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Provider\StoreRequest;
+use App\Http\Resources\ProviderResource;
 use App\Models\Provider;
 use App\Models\Topic;
 use Illuminate\Http\JsonResponse;
@@ -16,26 +17,17 @@ class ProviderController extends Controller
     public function index()
     {
 
-        $providers = Provider::all();
-
-        return JsonResponse::fromJsonString(json_encode($providers));
+    return ProviderResource::collection(Provider::all());
     }
 
     public function show(Provider $provider)
     {
-        return $provider->toJson();
+        return new ProviderResource($provider);
     }
 
     public function byTopicId(Topic $topic)
     {
-        $providers = Provider::all()->where('topic_id', '=', $topic->id);
-
-        return json_encode($providers);
-    }
-
-    public function medias(Provider $provider)
-    {
-        return $provider->medias->toJson();
+        return ProviderResource::collection(Provider::where('topic_id', '=', $topic->id)->get());
     }
 
     public function store(StoreRequest $request)
@@ -62,8 +54,6 @@ class ProviderController extends Controller
 
     public function destroy(Provider $provider)
     {
-
-
         try {
             DB::beginTransaction();
 

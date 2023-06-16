@@ -5,8 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Topic\StoreRequest;
 use App\Http\Requests\Api\Topic\UpdateRequest;
+use App\Http\Resources\TopicResource;
 use App\Models\Topic;
-use Illuminate\{Contracts\Foundation\Application, Contracts\Routing\ResponseFactory, Http\Response, Support\Facades\DB};
+use Illuminate\{Contracts\Foundation\Application,
+    Contracts\Routing\ResponseFactory,
+    Http\Resources\Json\AnonymousResourceCollection,
+    Http\Response,
+    Support\Facades\DB};
 
 class TopicController extends Controller
 {
@@ -17,11 +22,11 @@ class TopicController extends Controller
      * Show a Topic
      *
      * @param Topic $topic
-     * @return string
+     * @return AnonymousResourceCollection
      */
     public function show(Topic $topic)
     {
-        return $topic->toJson();
+        return new TopicResource::($topic);
     }
 
     public function showWithProviders(Topic $topic)
@@ -32,11 +37,11 @@ class TopicController extends Controller
     /***
      * Show all topic
      *
-     * @return string
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
-        return Topic::all()->toJson();
+        return TopicResource::collection(Topic::all());
     }
 
     /***

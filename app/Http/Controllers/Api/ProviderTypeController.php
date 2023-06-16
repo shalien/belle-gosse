@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ProviderType\StoreRequest;
+use App\Http\Resources\ProviderTypeResource;
 use App\Models\ProviderType;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -15,12 +16,11 @@ class ProviderTypeController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return JsonResponse|\Illuminate\Http\Response
+     * @return AnonymousResourceCollection
      */
     public function index()
     {
-        //
-        return JsonResponse::fromJsonString(ProviderType::all()->toJson());
+        return ProviderTypeResource::collection(ProviderType::all());
     }
 
     /**
@@ -58,20 +58,20 @@ class ProviderTypeController extends Controller
      * Display the specified resource.
      *
      * @param ProviderType $providerType
-     * @return string
+     * @return ProviderTypeResource
      */
     public function show(ProviderType $providerType)
     {
         //
-        return $providerType->toJson();
+       return new ProviderTypeResource($providerType);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, $id)
     {
@@ -82,7 +82,7 @@ class ProviderTypeController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy($id)
     {

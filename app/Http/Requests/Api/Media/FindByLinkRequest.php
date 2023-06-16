@@ -23,7 +23,7 @@ class FindByLinkRequest extends FormRequest
     {
         return [
             //
-            'url' => 'required|string'
+            'hash' => 'required|string'
         ];
     }
 }

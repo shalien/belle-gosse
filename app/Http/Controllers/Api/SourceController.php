@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Source\FindByLinkRequest;
 use App\Http\Requests\Api\Source\StoreRequest;
+use App\Http\Resources\SourceResource;
 use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -14,26 +15,24 @@ class SourceController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return string
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
         //
-        return Source::all()->toJson();
+        return SourceResource::collection(Source::all());
     }
 
 
     /**
-     * @param FindByLinkRequest $request
-     * @return string
+     * @param Request $request
+     * @return SourceResource
      */
-    public function findByLink(FindByLinkRequest $request): string
+    public function findByLink(Request $request): SourceResource
     {
-        $url = urldecode($request->validated(['url']));
+        $url = base64_decode($request['url']);
 
-        $source = Source::all()->where('link', 'like', "%{$url}%")->first;
-
-        return $source->toJson();
+        return new SourceResource(Source::where('link', '=', $url)->firstOrFail());
     }
 
     /**
@@ -71,29 +70,6 @@ class SourceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    public function getByLink($link)
-    {
-
-        $source = Source::all()->where('link', '=', urldecode($link))->first();
-
-        if ($source == null) {
-            return response(status: 404);
-        } else {
-            return $source->toJson();
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

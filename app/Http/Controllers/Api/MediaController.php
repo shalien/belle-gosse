@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Media\FindByLinkRequest;
 use App\Http\Requests\Api\Media\StoreRequest;
+use App\Http\Resources\MediaResource;
 use App\Models\Media;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
@@ -14,12 +16,13 @@ class MediaController extends Controller
 
     public function index()
     {
-        return json_encode(Media::all());
+        return MediaResource::collection(Media::all());
     }
 
 
     public function store(StoreRequest $request)
     {
+
         $media = null;
 
         try {
@@ -39,15 +42,13 @@ class MediaController extends Controller
     }
 
     /**
-     * @param FindByLinkRequest $request
-     * @return string
+     * @param Request $request
+     * @return MediaResource
      */
-    public function findByLink(FindByLinkRequest $request): string
+    public function findByLink(Request $request): MediaResource
     {
-        $url = urldecode($request->validated(['url']));
+        $url = base64_decode($request['hash']);
 
-        $media = Media::all()->where('link', 'like', "%{$url}%")->first;
-
-        return $media->toJson();
+        return new MediaResource(Media::where('link', '=', $url)->firstOrFail());
     }
 }
