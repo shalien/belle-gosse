@@ -22,11 +22,11 @@ class TopicController extends Controller
      * Show a Topic
      *
      * @param Topic $topic
-     * @return AnonymousResourceCollection
+     * @return TopicResource
      */
     public function show(Topic $topic)
     {
-        return new TopicResource::($topic);
+        return new TopicResource($topic);
     }
 
     public function showWithProviders(Topic $topic)
