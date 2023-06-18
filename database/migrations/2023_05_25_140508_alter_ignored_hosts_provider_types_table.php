@@ -17,11 +17,13 @@ return new class extends Migration {
             $table->foreign('provider_type_id')
                 ->references('id')
                 ->on('provider_types')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
             $table->foreign('ignored_host_id')
                 ->references('id')
                 ->on('ignored_hosts')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
     }

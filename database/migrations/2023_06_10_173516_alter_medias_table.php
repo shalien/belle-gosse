@@ -14,19 +14,21 @@ return new class extends Migration {
     {
         Schema::table('medias', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('source_id')->nullable();
+            $table->unsignedBigInteger('source_id');
 
             $table->foreign('source_id')
                 ->references('id')
                 ->on('sources')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
 
-            $table->unsignedBigInteger('destination_id')->nullable();
+            $table->unsignedBigInteger('destination_id');
 
             $table->foreign('destination_id')
                 ->references('id')
                 ->on('destinations')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
 

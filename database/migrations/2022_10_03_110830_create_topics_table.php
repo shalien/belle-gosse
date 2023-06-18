@@ -14,11 +14,9 @@ return new class extends Migration {
     {
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->integer('order');
+            $table->string('name')->unique()->index();
+            $table->integer('order')->unique()->index();
             $table->timestamps();
-
-            $table->index(['name']);
         });
     }
 

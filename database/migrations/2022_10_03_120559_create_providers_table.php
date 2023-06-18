@@ -14,11 +14,10 @@ return new class extends Migration {
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
-            $table->string('link');
+            $table->string('link')->unique()->index();
+            $table->string('prefix')->nullable();
             $table->timestamps();
 
-            $table->index(['type', 'link']);
         });
     }
 

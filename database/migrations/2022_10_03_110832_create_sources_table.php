@@ -12,9 +12,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('providers', function (Blueprint $table) {
-            //
-            $table->dropColumn('type');
+        Schema::create('sources', function (Blueprint $table) {
+            $table->id();
+            $table->longText('link')->unique()->index()->fulltext();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +26,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('providers', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('sources');
     }
 };

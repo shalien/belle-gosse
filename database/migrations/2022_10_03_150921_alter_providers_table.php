@@ -15,7 +15,11 @@ return new class extends Migration {
         Schema::table('providers', function (Blueprint $table) {
             //
             $table->unsignedBigInteger('topic_id');
-            $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
+            $table->foreign('topic_id')
+                ->references('id')
+                ->on('topics')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

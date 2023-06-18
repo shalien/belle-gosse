@@ -14,10 +14,11 @@ return new class extends Migration {
     {
         Schema::table('providers', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('provider_type_id')->nullable();
+            $table->unsignedBigInteger('provider_type_id');
             $table->foreign('provider_type_id')
                 ->references('id')
                 ->on('provider_types')
+                ->onUpdate('cascade')
                 ->onDelete('cascade');
 
         });
