@@ -30,6 +30,10 @@ class MediaController extends Controller
 
             $media = Media::create($request->validated());
 
+            $media->source()->associate($request->validated()['source_id']);
+            $media->destination()->associate($request->validated()['destination_id']);
+
+
             $media->save();
         } catch (\Exception $e) {
             DB::rollBack();
