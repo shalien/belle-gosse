@@ -75,6 +75,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
             Route::get('/', 'index');
             Route::post('/', 'store');
             Route::get('/{url}', 'findByLink');
+            Route::delete('/{source}', 'destroy');
         }
     );
 
@@ -82,6 +83,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         function () {
             Route::get('/', 'index');
             Route::post('/', 'store');
+            Route::delete('/{destination}', 'destroy');
         }
     );
 });

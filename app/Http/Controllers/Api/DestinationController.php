@@ -85,8 +85,11 @@ class DestinationController extends Controller
      * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy(Destination $destination)
     {
         //
+
+        $destination->delete();
+
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('providers', function (Blueprint $table) {
             $table->id();
-            $table->string('link')->unique()->index();
+            $table->string('link')->index();
             $table->string('prefix')->nullable();
             $table->timestamps();
 
