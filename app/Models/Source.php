@@ -11,6 +11,10 @@ class Source extends Model
 
     protected $fillable = ['link', 'provider_id'];
 
+    public function provider()
+    {
+        return $this->belongsTo(Provider::class);
+    }
 
     public function medias()
     {

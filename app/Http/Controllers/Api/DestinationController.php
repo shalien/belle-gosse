@@ -22,14 +22,14 @@ class DestinationController extends Controller
     {
         //
 
-      return DestinationResource::collection(Destination::all());
+        return DestinationResource::collection(Destination::all());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param Request $request
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(StoreRequest $request)
     {
@@ -45,7 +45,7 @@ class DestinationController extends Controller
             $destination->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();

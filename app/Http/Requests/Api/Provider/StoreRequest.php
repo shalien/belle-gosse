@@ -28,7 +28,7 @@ class StoreRequest extends FormRequest
             //
             'provider_type_id' => 'required|exists:\App\Models\ProviderType,id',
             'link' => 'required|string',
-            'topic_id' => 'required|numeric'
+            'topic_id' => 'required|numeric|exists:\App\Models\Topics,id',
         ];
     }
 }

@@ -43,7 +43,7 @@ class IgnoredHostController extends Controller
             $ignored_host->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();

@@ -25,6 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             //
+            'provider_id' => 'required|exists:\App\Models\Provider,id',
             'link' => 'required|string'
         ];
     }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Media\FindByLinkRequest;
 use App\Http\Requests\Api\Media\StoreRequest;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
@@ -33,7 +33,7 @@ class MediaController extends Controller
             $media->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();

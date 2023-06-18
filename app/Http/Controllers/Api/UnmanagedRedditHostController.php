@@ -42,7 +42,7 @@ class UnmanagedRedditHostController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($request, $e);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();

@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Provider\StoreRequest;
 use App\Http\Resources\ProviderResource;
 use App\Models\Provider;
 use App\Models\Topic;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class ProviderController extends Controller
@@ -17,7 +17,7 @@ class ProviderController extends Controller
     public function index()
     {
 
-    return ProviderResource::collection(Provider::all());
+        return ProviderResource::collection(Provider::all());
     }
 
     public function show(Provider $provider)
@@ -43,7 +43,7 @@ class ProviderController extends Controller
             $provider->save();
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();

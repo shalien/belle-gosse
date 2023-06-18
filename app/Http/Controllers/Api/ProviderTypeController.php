@@ -63,7 +63,7 @@ class ProviderTypeController extends Controller
     public function show(ProviderType $providerType)
     {
         //
-       return new ProviderTypeResource($providerType);
+        return new ProviderTypeResource($providerType);
     }
 
     /**

@@ -10,9 +10,24 @@ return new class extends Migration {
      */
     public function up(): void
     {
+
+        Schema::table('medias', function (Blueprint $table) {
+            //
+            $table->dropForeign(['source_id']);
+        });
+
         Schema::table('sources', function (Blueprint $table) {
             //
-            $table->fullText('link');
+            $table->unique('link');
+        });
+
+        Schema::table('medias', function (Blueprint $table) {
+            //
+            $table->foreign('source_id')
+                ->references('id')
+                ->on('sources')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
