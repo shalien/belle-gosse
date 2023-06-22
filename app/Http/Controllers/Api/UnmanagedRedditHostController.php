@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\UnmanagedRedditHost\StoreRequest;
+use App\Http\Requests\Api\UnmanagedRedditHost\StoreUnmanagedRedditHostRequest;
+use App\Http\Resources\UnmanagedRedditHostResource;
 use App\Models\UnmanagedRedditHost;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -25,10 +26,9 @@ class UnmanagedRedditHostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRequest $request
-     * @return Response
+     * @return UnmanagedRedditHostResource|\Illuminate\Http\JsonResponse|Response
      */
-    public function store(StoreRequest $request)
+    public function store(StoreUnmanagedRedditHostRequest $request)
     {
         //
         $unmanagedRedditHost = null;
@@ -42,18 +42,19 @@ class UnmanagedRedditHostController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();
 
-        return response(json_encode(['id' => $unmanagedRedditHost->id]), 200);
+        return new UnmanagedRedditHostResource(UnmanagedRedditHost::findOrFail($unmanagedRedditHost->id));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -61,25 +62,14 @@ class UnmanagedRedditHostController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUnmanagedRedditHostRequest $request, UnmanagedRedditHost $unmanagedreddithost)
     {
         //
     }
@@ -87,7 +77,7 @@ class UnmanagedRedditHostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

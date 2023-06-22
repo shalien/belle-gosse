@@ -13,7 +13,6 @@ class Media extends Model
 
     protected $table = 'medias';
 
-
     public function source()
     {
         return $this->belongsTo(Source::class);

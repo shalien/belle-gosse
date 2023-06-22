@@ -11,7 +11,6 @@ class UnmanagedRedditHost extends Model
 
     protected $fillable = [
         'host',
-        'url'
+        'url',
     ];
-
 }

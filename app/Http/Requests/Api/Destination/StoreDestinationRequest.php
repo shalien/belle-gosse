@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\IgnoredHost;
+namespace App\Http\Requests\Api\Destination;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class StoreDestinationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'host' => 'required|unique',
+            'filename' => 'required|string',
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Topic;
+namespace App\Http\Requests\Api\Source;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class FindSourceByLinkRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             //
-            'id' => 'required|numeric',
-            'name' => 'required|string|unique:topics',
-            'order' => 'required|numeric|unique:topics'
+            'url' => 'required|string',
         ];
     }
 }

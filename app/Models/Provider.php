@@ -13,10 +13,10 @@ class Provider extends Model
         'link',
         'topic_id',
         'prefix',
-        'provider_type_id'
+        'provider_type_id',
     ];
 
-    public function type()
+    public function provider_type()
     {
         return $this->belongsTo(ProviderType::class);
     }

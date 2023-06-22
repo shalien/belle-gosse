@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\Provider;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DeleteRequest extends FormRequest
+class StoreProviderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,10 @@ class DeleteRequest extends FormRequest
     {
         return [
             //
-            "id" => "required|numeric"
+            //
+            'provider_type_id' => 'required|exists:\App\Models\ProviderType,id',
+            'link' => 'required|string',
+            'topic_id' => 'required|numeric|exists:\App\Models\Topic,id',
         ];
     }
 }

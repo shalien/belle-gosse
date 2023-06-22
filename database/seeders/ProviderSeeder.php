@@ -25,7 +25,7 @@ class ProviderSeeder extends Seeder
             'link' => 'https://reddit.com/r/cats',
             'topic_id' => 1,
             'prefix' => '',
-            'provider_type_id' => 1
+            'provider_type_id' => 1,
         ]);
     }
 }

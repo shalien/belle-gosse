@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\IgnoredHost\ShowRequest;
 use App\Http\Requests\Api\IgnoredHost\StoreRequest;
 use App\Models\IgnoredHost;
 use Illuminate\Http\Request;
@@ -23,11 +22,9 @@ class IgnoredHostController extends Controller
         return IgnoredHost::all()->toJson();
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRequest $request
      * @return Response
      */
     public function store(StoreRequest $request)
@@ -43,6 +40,7 @@ class IgnoredHostController extends Controller
             $ignored_host->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
@@ -55,7 +53,7 @@ class IgnoredHostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return string
      */
     public function show(IgnoredHost $ignoredHost)
@@ -68,7 +66,7 @@ class IgnoredHostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -78,8 +76,7 @@ class IgnoredHostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -90,7 +87,7 @@ class IgnoredHostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(IgnoredHost $ignoredHost)

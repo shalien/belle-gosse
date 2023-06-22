@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Media\StoreRequest;
+use App\Http\Requests\Api\Media\StoreMediaRequest;
+use App\Http\Requests\Api\Media\UpdateMediaRequest;
 use App\Http\Resources\MediaResource;
 use App\Models\Media;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -14,13 +16,17 @@ class MediaController extends Controller
 {
     //
 
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return MediaResource::collection(Media::all());
     }
 
+    public function show(Media $media): MediaResource
+    {
+        return new MediaResource(Media::findOrFail($media->id));
+    }
 
-    public function store(StoreRequest $request)
+    public function store(StoreMediaRequest $request)
     {
 
         $media = null;
@@ -33,25 +39,46 @@ class MediaController extends Controller
             $media->source()->associate($request->validated()['source_id']);
             $media->destination()->associate($request->validated()['destination_id']);
 
-
             $media->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();
 
-        return response(json_encode(['id' => $media->id]));
+        return new MediaResource($media);
     }
 
-    /**
-     * @param Request $request
-     * @return MediaResource
-     */
-    public function findByLink(Request $request): MediaResource
+    public function update(UpdateMediaRequest $request, Media $media)
     {
-        $url = base64_decode($request['hash']);
+
+        $media = Media::findOrFail($media->id);
+
+        try {
+            DB::beginTransaction();
+
+            $media = $media->update($request->validated());
+
+            $media->source()->associate($request->validated()['source_id']);
+            $media->destination()->associate($request->validated()['destination_id']);
+
+            $media->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        }
+
+        DB::commit();
+
+        return new MediaResource($media);
+    }
+
+    public function showByLink(Request $request): MediaResource
+    {
+        $url = base64_decode($request['url']);
 
         return new MediaResource(Media::where('link', '=', $url)->firstOrFail());
     }

@@ -3,57 +3,33 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Topic\StoreRequest;
-use App\Http\Requests\Api\Topic\UpdateRequest;
+use App\Http\Requests\Api\Topic\StoreTopicRequest;
+use App\Http\Requests\Api\Topic\UpdateTopicRequest;
 use App\Http\Resources\TopicResource;
 use App\Models\Topic;
-use Illuminate\{Contracts\Foundation\Application,
-    Contracts\Routing\ResponseFactory,
-    Http\Resources\Json\AnonymousResourceCollection,
-    Http\Response,
-    Support\Facades\DB};
+use Exception;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class TopicController extends Controller
 {
-    //
-
     /**
-     *
-     * Show a Topic
-     *
-     * @param Topic $topic
-     * @return TopicResource
+     * Display a listing of the resource.
      */
-    public function show(Topic $topic)
+    public function index(): AnonymousResourceCollection
     {
-        return new TopicResource($topic);
-    }
-
-    public function showWithProviders(Topic $topic)
-    {
-        return $topic->load('providers')->toJson();
-    }
-
-    /***
-     * Show all topic
-     *
-     * @return AnonymousResourceCollection
-     */
-    public function index()
-    {
+        //
         return TopicResource::collection(Topic::all());
     }
 
-    /***
-     *
-     * Create a new topic in the database
-     *
-     * @param StoreRequest $request
-     * @return Application|ResponseFactory|Response
+    /**
+     * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request)
+    public function store(StoreTopicRequest $request): JsonResponse|TopicResource
     {
-
         $topic = null;
 
         try {
@@ -63,37 +39,57 @@ class TopicController extends Controller
 
             $topic->save();
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();
 
-        return response(json_encode(['id' => $topic->id]), 200);
+        return new TopicResource($topic);
     }
 
     /**
-     * @param UpdateRequest $request
-     * @param Topic $topic
-     * @return Application|ResponseFactory|Response
+     * Display the specified resource.
      */
-    public function update(UpdateRequest $request, Topic $topic)
+    public function show(Topic $topic): TopicResource
+    {
+        //
+        return new TopicResource($topic);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateTopicRequest $request, Topic $topic): JsonResponse|TopicResource
     {
 
         try {
-            DB::beginTransaction();;
+            DB::beginTransaction();
+            $topic->updateOrFail($request->validated());
 
-            $topic->update($request->validated());
-        } catch (\Exception $e) {
+            $topic->save();
+        } catch (Throwable $e) {
             DB::rollBack();
-            dd($e);
+
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();
 
-        return response(null, 200);
+        return new TopicResource($topic);
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Topic $topic): JsonResponse
+    {
+        //
 
+        return $topic->delete()
+            ? response()->json(null, Response::HTTP_NO_CONTENT)
+            : response()->json(['error' => 'Error deleting'], Response::HTTP_CONFLICT);
+    }
 }

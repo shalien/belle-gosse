@@ -16,17 +16,15 @@ class ProviderTypeSeeder extends Seeder
     {
         //
         DB::table('provider_types')->insert([
-            'name' => 'reddit'
+            'name' => 'reddit',
         ]);
 
-
         DB::table('provider_types')->insert([
-            'name' => 'otherbooru'
+            'name' => 'otherbooru',
         ]);
 
-
         DB::table('provider_types')->insert([
-            'name' => 'danbooru'
+            'name' => 'danbooru',
         ]);
     }
 }

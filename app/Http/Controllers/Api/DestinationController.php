@@ -3,35 +3,31 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Destination\StoreRequest;
+use App\Http\Requests\Api\Destination\StoreDestinationRequest;
+use App\Http\Requests\Api\Destination\UpdateDestinationRequest;
 use App\Http\Resources\DestinationResource;
 use App\Models\Destination;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response as ResponseAlias;
 
 class DestinationController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         //
-
         return DestinationResource::collection(Destination::all());
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreRequest $request)
+    public function store(StoreDestinationRequest $request): DestinationResource|JsonResponse
     {
         //
 
@@ -45,51 +41,59 @@ class DestinationController extends Controller
             $destination->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();
 
-        return response(json_encode(['id' => $destination->id]), 200);
+        return new DestinationResource($destination);
     }
-
 
     /**
      * Display the specified resource.
      *
-     * @param int $id
-     * @return DestinationResource
+     * @param  int  $id
      */
-    public function show($id)
+    public function show(Destination $destination): DestinationResource
     {
         //
-
-        return new DestinationResource(Destination::findOrFail($id));
+        return new DestinationResource(Destination::findOrFail($destination->id));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateDestinationRequest $request, Destination $destination): DestinationResource|JsonResponse
     {
         //
+        $destination = Destination::findOrFail($destination->id);
+
+        try {
+            DB::beginTransaction();
+
+            $destination = $destination->update($request->validated());
+
+            $destination->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        }
+
+        DB::commit();
+
+        return new DestinationResource(Destination::findOrFail($destination->id));
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return Response
      */
-    public function destroy(Destination $destination)
+    public function destroy(Destination $destination): JsonResponse
     {
         //
-
-        $destination->delete();
-
+        return $destination->delete()
+            ? response()->json(null, ResponseAlias::HTTP_NO_CONTENT)
+            : response()->json(['error' => 'Error deleting'], ResponseAlias::HTTP_CONFLICT);
     }
 }

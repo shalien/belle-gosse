@@ -11,7 +11,7 @@ class Topic extends Model
 
     protected $fillable = [
         'name',
-        'order'
+        'order',
     ];
 
     public function providers()

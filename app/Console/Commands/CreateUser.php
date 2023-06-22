@@ -33,7 +33,7 @@ class CreateUser extends Command
             'password' => $this->argument('password'),
             'password_confirmation' => $this->argument('password'),
             'email' => $this->argument('email'),
-            'device_name' => $this->argument('device_name')
+            'device_name' => $this->argument('device_name'),
         ];
 
         $action = new CreateNewUser();

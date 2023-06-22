@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Requests\Api\Destination;
+namespace App\Http\Requests\Api\Topic;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class StoreTopicRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,11 +19,12 @@ class StoreRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             //
-            'filename' => 'required|string'
+            'name' => 'required|string|unique:topics',
+            'order' => 'required|numeric|unique:topics',
         ];
     }
 }

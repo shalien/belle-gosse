@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\ProviderType\StoreRequest;
+use App\Http\Requests\Api\ProviderType\StoreProviderTypeRequest;
+use App\Http\Requests\Api\ProviderType\UpdateProviderTypeRequest;
 use App\Http\Resources\ProviderTypeResource;
 use App\Models\ProviderType;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -26,13 +26,10 @@ class ProviderTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param StoreRequest $request
-     * @return Response
+     * @return ProviderTypeResource
      */
-    public function store(StoreRequest $request)
+    public function store(StoreProviderTypeRequest $request)
     {
-        //
-
         //
         $provider_type = null;
 
@@ -49,43 +46,53 @@ class ProviderTypeController extends Controller
 
         DB::commit();
 
-        return response(json_encode(['id' => $provider_type->id]), 200);
-
-
+        return new ProviderTypeResource(ProviderType::findOrfail($provider_type->id));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param ProviderType $providerType
-     * @return ProviderTypeResource
+     * @param $id
      */
-    public function show(ProviderType $providerType)
+    public function show(ProviderType $providertype): ProviderTypeResource
     {
-        //
-        return new ProviderTypeResource($providerType);
+        return new ProviderTypeResource(ProviderType::findOrFail($providertype->id));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param int $id
-     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProviderTypeRequest $request, ProviderType $providertype): ProviderTypeResource
     {
         //
+        try {
+            DB::beginTransaction();
+
+            $providertype->update($request->validated());
+
+            $providertype->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            dd($e);
+        }
+
+        DB::commit();
+
+        return new ProviderTypeResource(ProviderType::findOrfail($providertype->id));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return Response
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(ProviderType $providertype)
     {
         //
+
+        return $providertype->delete()
+            ? response()->json(['message' => 'Provider Type deleted successfully'], Response::HTTP_NO_CONTENT)
+            : response()->json(['message' => 'Provider Type could not be deleted'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

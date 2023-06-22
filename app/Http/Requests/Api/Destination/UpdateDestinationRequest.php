@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Media;
+namespace App\Http\Requests\Api\Destination;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FindByLinkRequest extends FormRequest
+class UpdateDestinationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class FindByLinkRequest extends FormRequest
     {
         return [
             //
-            'hash' => 'required|string'
+            'filename' => 'required|string',
         ];
     }
 }

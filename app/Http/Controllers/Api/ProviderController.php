@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Provider\StoreRequest;
+use App\Http\Requests\Api\Provider\StoreProviderRequest;
 use App\Http\Resources\ProviderResource;
 use App\Models\Provider;
 use App\Models\Topic;
@@ -22,7 +22,7 @@ class ProviderController extends Controller
 
     public function show(Provider $provider)
     {
-        return new ProviderResource($provider);
+        return new ProviderResource(Provider::findOrFail($provider->id));
     }
 
     public function byTopicId(Topic $topic)
@@ -30,7 +30,7 @@ class ProviderController extends Controller
         return ProviderResource::collection(Provider::where('topic_id', '=', $topic->id)->get());
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreProviderRequest $request)
     {
 
         $provider = null;
@@ -41,35 +41,25 @@ class ProviderController extends Controller
             $provider = Provider::create($request->validated());
 
             $provider->topic()->associate($request->validated()['topic_id']);
-            $provider->type()->associate($request->validated()['provider_type_id']);
+            $provider->provider_type()->associate($request->validated()['provider_type_id']);
 
             $provider->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
         }
 
         DB::commit();
 
-        return response(json_encode(['id' => $provider->id]), 200);
+        return new ProviderResource(Provider::findOrFail($provider->id));
     }
-
 
     public function destroy(Provider $provider)
     {
-        try {
-            DB::beginTransaction();
-
-            $provider->delete();
-
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd($e);
-        }
-
-        DB::commit();
-
-        return response();
+        return $provider->delete()
+            ? response()->json(['message' => 'Provider deleted successfully'], Response::HTTP_NO_CONTENT)
+            : response()->json(['message' => 'Unable to delete provider'], Response::HTTP_INTERNAL_SERVER_ERROR);
 
     }
 }

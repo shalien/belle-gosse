@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\ProviderType;
+namespace App\Http\Requests\Api\Source;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class StoreSourceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,7 +25,8 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|unique'
+            'provider_id' => 'required|exists:\App\Models\Provider,id',
+            'link' => 'required|string',
         ];
     }
 }

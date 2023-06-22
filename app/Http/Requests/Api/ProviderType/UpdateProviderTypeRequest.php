@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\UnmanagedRedditHost;
+namespace App\Http\Requests\Api\ProviderType;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateProviderTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +25,7 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'host' => 'required|string',
-            'url' => 'required|string'
+            'name' => 'required|unique',
         ];
     }
 }

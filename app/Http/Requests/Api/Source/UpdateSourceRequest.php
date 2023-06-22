@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Media;
+namespace App\Http\Requests\Api\Source;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateSourceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,9 +25,8 @@ class StoreRequest extends FormRequest
     {
         return [
             //
-            'link' => 'required|string|unique:medias',
-            'source_id' => 'required|exists:\App\Models\Source,id',
-            'destination_id' => 'required|exists:\App\Models\Destination,id'
+            'provider_id' => 'required|exists:\App\Models\Provider,id',
+            'link' => 'required|string',
         ];
     }
 }
