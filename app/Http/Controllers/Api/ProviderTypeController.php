@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ProviderType\StoreProviderTypeRequest;
 use App\Http\Requests\Api\ProviderType\UpdateProviderTypeRequest;
 use App\Http\Resources\ProviderTypeResource;
 use App\Models\ProviderType;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -84,8 +85,8 @@ class ProviderTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
+     * @param ProviderType $providertype
+     * @return JsonResponse
      */
     public function destroy(ProviderType $providertype)
     {

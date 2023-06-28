@@ -22,7 +22,7 @@ class TopicController extends Controller
     public function index(): AnonymousResourceCollection
     {
         //
-        return TopicResource::collection(Topic::all());
+        return TopicResource::collection(Topic::with('topic_aliases')->get());
     }
 
     /**

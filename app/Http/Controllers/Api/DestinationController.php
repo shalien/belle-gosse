@@ -21,7 +21,7 @@ class DestinationController extends Controller
     public function index(): AnonymousResourceCollection
     {
         //
-        return DestinationResource::collection(Destination::all());
+        return DestinationResource::collection(Destination::with('medias')->get());
     }
 
     /**
@@ -53,7 +53,8 @@ class DestinationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Destination $destination
+     * @return DestinationResource
      */
     public function show(Destination $destination): DestinationResource
     {

@@ -41,7 +41,6 @@ class ProviderController extends Controller
             $provider = Provider::create($request->validated());
 
             $provider->topic()->associate($request->validated()['topic_id']);
-            $provider->provider_type()->associate($request->validated()['provider_type_id']);
 
             $provider->save();
         } catch (\Exception $e) {

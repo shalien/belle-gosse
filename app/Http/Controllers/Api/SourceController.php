@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Source\StoreSourceRequest;
+use App\Http\Requests\Api\Source\UpdateSourceRequest;
 use App\Http\Resources\SourceResource;
 use App\Models\Source;
 use Illuminate\Http\JsonResponse;
@@ -61,33 +62,51 @@ class SourceController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return Response
+     * @return SourceResource
      */
-    public function show($id)
+    public function show(Source $source)
     {
         //
+        return new SourceResource(Source::findOrFail($source->id));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param UpdateSourceRequest $request
+     * @param Source $source
+     * @return SourceResource|JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateSourceRequest $request, Source $source)
     {
         //
+        try {
+            DB::beginTransaction();
+            $source = Source::findOrFail($source->id);
+            $source->update($request->validated());
+            $source->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        }
+
+        DB::commit();
+
+        return new SourceResource(Source::findOrFail($source->id));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return Response
+     * @param Source $source
+     * @return JsonResponse
      */
     public function destroy(Source $source)
     {
         //
-        $source->delete();
+        return $source->delete() ?
+            response()->json(['message' => 'Source deleted successfully'], Response::HTTP_OK) :
+            response()->json(['message' => 'Source not deleted'], Response::HTTP_CONFLICT);
     }
 }
