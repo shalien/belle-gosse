@@ -56,7 +56,7 @@ class TopicController extends Controller
     public function show(Topic $topic): TopicResource
     {
         //
-        return new TopicResource($topic);
+        return new TopicResource($topic::with('topic_aliases')->findOrFail($topic->id));
     }
 
     /**

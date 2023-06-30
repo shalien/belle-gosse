@@ -7,7 +7,7 @@ use App\Http\Requests\Api\ProviderLink\StoreProviderLinkRequest;
 use App\Http\Requests\Api\ProviderLink\UpdateProviderLinkRequest;
 use App\Http\Resources\ProviderLinkResource;
 use App\Models\ProviderLink;
-use Illuminate\Http\Request;
+use http\Env\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
@@ -31,6 +31,11 @@ class ProviderLinkController extends Controller
         DB::beginTransaction();
         try {
             $providerLink = ProviderLink::create($request->validated());
+
+            if($request->has('providers')) {
+                $providerLink->providers()->sync($request->providers);
+            }
+
             $providerLink->save();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -48,7 +53,8 @@ class ProviderLinkController extends Controller
     public function show(ProviderLink $providerLink)
     {
         //
-        return new ProviderLinkResource(ProviderLink::findOrFail($providerLink->id));
+
+        return new ProviderLinkResource(ProviderLink::with('providers')->findOrFail($providerLink->id));
     }
 
     /**
@@ -63,6 +69,11 @@ class ProviderLinkController extends Controller
 
         try {
             $providerLink->update($request->validated());
+
+            if($request->has('providers')) {
+                $providerLink->providers()->sync($request->providers);
+            }
+
             $providerLink->save();
         } catch (\Exception $e) {
             DB::rollBack();

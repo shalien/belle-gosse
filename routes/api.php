@@ -28,14 +28,14 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
     Route::resources([
         'topics' => TopicController::class,
         'providers' => ProviderController::class,
-        'providerlinks' => ProviderLinkController::class,
+        'provider_links' => ProviderLinkController::class,
         'medias' => MediaController::class,
-        'unmanagedreddithosts' => UnmanagedRedditHostController::class,
-        'ignoredhosts' => IgnoredHostController::class,
-        'providertypes' => ProviderTypeController::class,
+        'unmanaged_hosts' => UnmanagedRedditHostController::class,
+        'ignored_hosts' => IgnoredHostController::class,
+        'provider_types' => ProviderTypeController::class,
         'sources' => SourceController::class,
         'destinations' => DestinationController::class,
-        'topicalias' => TopicAliasController::class,
+        'topic_aliases' => TopicAliasController::class,
     ]);
 
     Route::controller(TopicController::class)->prefix('topics')->group(function () {

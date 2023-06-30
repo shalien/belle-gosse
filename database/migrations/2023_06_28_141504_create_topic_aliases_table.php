@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('topic_alias', function (Blueprint $table) {
+        Schema::create('topic_aliases', function (Blueprint $table) {
             $table->id();
             $table->string('alias')->index()->unique();
             $table->foreignIdFor(Topic::class, 'topic_id')->constrained()->cascadeOnDelete();

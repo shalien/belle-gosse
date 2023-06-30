@@ -24,7 +24,8 @@ class StoreProviderLinkRequest extends FormRequest
         return [
             //
             'link' => 'required|string',
-            'provider_type_id' => 'required|integer|exists:provider_types,id'
+            'provider_type_id' => 'required|integer|exists:provider_types,id',
+            'providers' => 'present|array|exists:providers,id'
         ];
     }
 }
