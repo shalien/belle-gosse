@@ -18,6 +18,6 @@ class ProviderLink extends Model
 
     public function providers()
     {
-        return $this->belongsToMany(Provider::class);
+        return $this->hasMany(Provider::class);
     }
 }

@@ -27,9 +27,10 @@ return new class extends Migration
                 $provider_link->save();
             }
 
-            $provider_link->providers()->sync([$provider->id]);
+            $provider->provider_link_id = $provider_link->id;
 
             $provider_link->save();
+            $provider->save();
         }
     }
 

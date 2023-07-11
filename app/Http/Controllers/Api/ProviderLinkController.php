@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ProviderLink\StoreProviderLinkRequest;
 use App\Http\Requests\Api\ProviderLink\UpdateProviderLinkRequest;
 use App\Http\Resources\ProviderLinkResource;
+use App\Http\Resources\ProviderResource;
 use App\Models\ProviderLink;
-use http\Env\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
@@ -19,7 +19,7 @@ class ProviderLinkController extends Controller
     public function index(): AnonymousResourceCollection
     {
         //
-        return ProviderLinkResource::collection(ProviderLink::with('provider_type', 'providers')->get());
+        return ProviderLinkResource::collection(ProviderLink::all());
     }
 
     /**
@@ -31,10 +31,6 @@ class ProviderLinkController extends Controller
         DB::beginTransaction();
         try {
             $providerLink = ProviderLink::create($request->validated());
-
-            if($request->has('providers')) {
-                $providerLink->providers()->sync($request->providers);
-            }
 
             $providerLink->save();
         } catch (\Exception $e) {
@@ -53,8 +49,13 @@ class ProviderLinkController extends Controller
     public function show(ProviderLink $providerLink)
     {
         //
-
         return new ProviderLinkResource(ProviderLink::with('providers')->findOrFail($providerLink->id));
+    }
+
+    public function showWithProviders(ProviderLink $providerLink)
+    {
+        //
+        return ProviderResource::collection(ProviderLink::findOrFail($providerLink->id)->providers);
     }
 
     /**
@@ -70,9 +71,6 @@ class ProviderLinkController extends Controller
         try {
             $providerLink->update($request->validated());
 
-            if($request->has('providers')) {
-                $providerLink->providers()->sync($request->providers);
-            }
 
             $providerLink->save();
         } catch (\Exception $e) {
@@ -81,6 +79,8 @@ class ProviderLinkController extends Controller
         }
 
         DB::commit();
+
+        return new ProviderLinkResource($providerLink);
     }
 
     /**

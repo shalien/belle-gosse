@@ -55,7 +55,7 @@ class SourceController extends Controller
 
         DB::commit();
 
-        return new SourceResource(Source::findOrFail($source->id));
+        return new SourceResource($source);
     }
 
     /**

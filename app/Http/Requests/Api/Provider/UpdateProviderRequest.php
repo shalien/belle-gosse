@@ -25,6 +25,7 @@ class UpdateProviderRequest extends FormRequest
             //
             'links' => 'present|array|exists:provider_links,id',
             'topic_id' => 'required|numeric|exists:\App\Models\Topic,id',
+            'provider_link_id' => 'required|numeric|exists:\App\Models\ProviderLink,id',
         ];
     }
 }

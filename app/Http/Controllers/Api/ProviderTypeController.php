@@ -53,25 +53,26 @@ class ProviderTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $id
+     * @param ProviderType $provider_type
+     * @return ProviderTypeResource
      */
-    public function show(ProviderType $providertype): ProviderTypeResource
+    public function show(ProviderType $provider_type): ProviderTypeResource
     {
-        return new ProviderTypeResource(ProviderType::findOrFail($providertype->id));
+        return new ProviderTypeResource(ProviderType::findOrFail($provider_type->id));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProviderTypeRequest $request, ProviderType $providertype): ProviderTypeResource
+    public function update(UpdateProviderTypeRequest $request, ProviderType $provider_type): ProviderTypeResource
     {
         //
         try {
             DB::beginTransaction();
 
-            $providertype->update($request->validated());
+            $provider_type->update($request->validated());
 
-            $providertype->save();
+            $provider_type->save();
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e);
@@ -79,20 +80,20 @@ class ProviderTypeController extends Controller
 
         DB::commit();
 
-        return new ProviderTypeResource(ProviderType::findOrfail($providertype->id));
+        return new ProviderTypeResource(ProviderType::findOrfail($provider_type->id));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param ProviderType $providertype
+     * @param ProviderType $provider_type
      * @return JsonResponse
      */
-    public function destroy(ProviderType $providertype)
+    public function destroy(ProviderType $provider_type)
     {
         //
 
-        return $providertype->delete()
+        return $provider_type->delete()
             ? response()->json(['message' => 'Provider Type deleted successfully'], Response::HTTP_NO_CONTENT)
             : response()->json(['message' => 'Provider Type could not be deleted'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
