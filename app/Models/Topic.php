@@ -18,4 +18,9 @@ class Topic extends Model
     {
         return $this->hasMany(Provider::class);
     }
+
+    public function topic_aliases()
+    {
+        return $this->hasMany(TopicAlias::class);
+    }
 }

@@ -1,5 +1,6 @@
 {
     "name": "projetretro/belle-gosse",
+    "version": "2.0.0",
     "type": "project",
     "description": "Belle Gosse is the back-end part of the Magnifique Couple project, designed to be the memory of the Beau Gosse project",
     "keywords": [

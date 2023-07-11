@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Provider\StoreProviderRequest;
+use App\Http\Requests\Api\Provider\UpdateProviderRequest;
+use App\Http\Resources\ProviderLinkResource;
 use App\Http\Resources\ProviderResource;
 use App\Models\Provider;
+use App\Models\ProviderLink;
 use App\Models\Topic;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -16,18 +19,12 @@ class ProviderController extends Controller
 
     public function index()
     {
-
         return ProviderResource::collection(Provider::all());
     }
 
     public function show(Provider $provider)
     {
         return new ProviderResource(Provider::findOrFail($provider->id));
-    }
-
-    public function byTopicId(Topic $topic)
-    {
-        return ProviderResource::collection(Provider::where('topic_id', '=', $topic->id)->get());
     }
 
     public function store(StoreProviderRequest $request)
@@ -40,8 +37,33 @@ class ProviderController extends Controller
 
             $provider = Provider::create($request->validated());
 
+
             $provider->topic()->associate($request->validated()['topic_id']);
-            $provider->provider_type()->associate($request->validated()['provider_type_id']);
+
+            $provider->provider_link()->associate($request->validated()['provider_link_id']);
+
+
+            $provider->save();
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+        }
+
+        DB::commit();
+
+        return new ProviderResource(Provider::findOrFail($provider->id));
+    }
+
+    public function update(UpdateProviderRequest $request, Provider $provider) {
+        try {
+            DB::beginTransaction();
+
+            $provider->update($request->validated());
+
+            $provider->provider_link()->associate($request->validated()['provider_link_id']);
+
+            $provider->topic()->associate($request->validated()['topic_id']);
 
             $provider->save();
         } catch (\Exception $e) {

@@ -18,7 +18,7 @@ class MediaController extends Controller
 
     public function index(): AnonymousResourceCollection
     {
-        return MediaResource::collection(Media::all());
+        return MediaResource::collection(Media::with('source', 'destination')->get());
     }
 
     public function show(Media $media): MediaResource

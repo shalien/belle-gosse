@@ -4,14 +4,12 @@ namespace App\Http\Requests\Api\Provider;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProviderRequest extends FormRequest
+class UpdateProviderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -19,9 +17,9 @@ class StoreProviderRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             //
