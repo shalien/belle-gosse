@@ -19,7 +19,7 @@ return new class extends Migration {
                 ->references('id')
                 ->on('provider_links')
                 ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->nullOnDelete();
         });
     }
 

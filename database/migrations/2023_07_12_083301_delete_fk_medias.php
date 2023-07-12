@@ -14,8 +14,8 @@ return new class extends Migration {
     {
         Schema::table('medias', function (Blueprint $table) {
             //
-            $table->dropConstrainedForeignIdFor(Source::class, 'source_id');
-            $table->dropConstrainedForeignIdFor(Destination::class, 'destination_id');
+            $table->dropForeign(['source_id']);
+            $table->dropForeign(['destination_id']);
         });
     }
 

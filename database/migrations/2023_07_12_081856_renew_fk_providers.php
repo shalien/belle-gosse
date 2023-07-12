@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::table('providers', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('provider_type_id')->nullable();
-            $table->foreign('provider_type_id')->references('id')->on('provider_types')->nullOnDelete();
+            $table->unsignedBigInteger('provider_link_id')->nullable()->change();
+            $table->foreign('provider_link_id')->references('id')->on('provider_links')->nullOnDelete();
 
-            $table->unsignedBigInteger('topic_id')->nullable();
+            $table->unsignedBigInteger('topic_id')->nullable()->change();
             $table->foreign('topic_id')->references('id')->on('topics')->nullOnDelete();
         });
     }

@@ -12,9 +12,9 @@ return new class extends Migration {
     {
         Schema::table('providers', function (Blueprint $table) {
             //
-            $table->dropConstrainedForeignIdFor(\App\Models\ProviderLink::class, 'provider_link_id');
-            $table->dropConstrainedForeignIdFor(\App\Models\Topic::class, 'topic_id');
-        });
+            $table->dropForeign(['provider_link_id']);
+            $table->dropForeign(['topic_id']);
+         });
     }
 
     /**

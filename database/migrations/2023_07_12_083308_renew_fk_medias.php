@@ -12,10 +12,10 @@ return new class extends Migration {
     {
         Schema::table('medias', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('source_id')->nullable();
+            $table->unsignedBigInteger('source_id')->nullable()->change();
             $table->foreign('source_id')->references('id')->on('sources')->nullOnDelete();
 
-            $table->unsignedBigInteger('destination_id')->nullable();
+            $table->unsignedBigInteger('destination_id')->nullable()->change();
             $table->foreign('destination_id')->references('id')->on('destinations')->nullOnDelete();
         });
     }

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('sources', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('provider_id')->nullable();
+            $table->unsignedBigInteger('provider_id')->nullable()->change();
             $table->foreign('provider_id')->references('id')->on('providers')->nullOnDelete();
         });
     }
