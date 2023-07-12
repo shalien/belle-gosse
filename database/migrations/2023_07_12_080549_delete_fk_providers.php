@@ -7,29 +7,20 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('providers', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('provider_type_id');
-            $table->foreign('provider_type_id')
-                ->references('id')
-                ->on('provider_types')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
+            $table->dropConstrainedForeignIdFor(\App\Models\ProviderLink::class, 'provider_link_id');
+            $table->dropConstrainedForeignIdFor(\App\Models\Topic::class, 'topic_id');
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('providers', function (Blueprint $table) {
             //

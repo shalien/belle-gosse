@@ -26,7 +26,8 @@ class Provider extends Model
         return $this->hasMany(Source::class);
     }
 
-    public function provider_link() {
+    public function provider_link()
+    {
         return $this->belongsTo(ProviderLink::class);
     }
 }
