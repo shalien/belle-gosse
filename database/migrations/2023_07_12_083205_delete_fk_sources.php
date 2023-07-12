@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('sources', function (Blueprint $table) {
             //
-            $table->dropConstrainedForeignIdFor(\App\Models\Provider::class, 'provider_id');
+            $table->dropForeign(['provider_id']);
         });
     }
 

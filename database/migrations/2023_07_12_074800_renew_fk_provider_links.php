@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::table('provider_links', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('provider_type_id')->nullable();
+            $table->unsignedBigInteger('provider_type_id')->nullable()->change();
             $table->foreign('provider_type_id')->references('id')->on('provider_types')->nullOnDelete();
 
         });
