@@ -5,11 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Provider\StoreProviderRequest;
 use App\Http\Requests\Api\Provider\UpdateProviderRequest;
-use App\Http\Resources\ProviderLinkResource;
 use App\Http\Resources\ProviderResource;
 use App\Models\Provider;
-use App\Models\ProviderLink;
-use App\Models\Topic;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -55,7 +52,8 @@ class ProviderController extends Controller
         return new ProviderResource(Provider::findOrFail($provider->id));
     }
 
-    public function update(UpdateProviderRequest $request, Provider $provider) {
+    public function update(UpdateProviderRequest $request, Provider $provider)
+    {
         try {
             DB::beginTransaction();
 

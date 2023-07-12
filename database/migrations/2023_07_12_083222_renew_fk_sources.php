@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Topic;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,11 +10,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('topic_aliases', function (Blueprint $table) {
-            $table->id();
-            $table->string('alias')->index()->unique();
-            $table->foreignIdFor(Topic::class, 'topic_id')->constrained()->cascadeOnDelete();
-            $table->timestamps();
+        Schema::table('sources', function (Blueprint $table) {
+            //
+            $table->unsignedBigInteger('provider_id')->nullable();
+            $table->foreign('provider_id')->references('id')->on('providers')->nullOnDelete();
         });
     }
 
@@ -24,6 +22,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('topic_alias');
+        Schema::table('sources', function (Blueprint $table) {
+            //
+        });
     }
 };

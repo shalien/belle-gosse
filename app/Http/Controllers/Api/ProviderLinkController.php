@@ -61,7 +61,7 @@ class ProviderLinkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProviderLinkRequest  $request, ProviderLink $providerLink)
+    public function update(UpdateProviderLinkRequest $request, ProviderLink $providerLink)
     {
         //
         $providerLink = ProviderLink::findOrFail($providerLink->id);

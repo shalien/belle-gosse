@@ -7,7 +7,6 @@ use App\Http\Requests\Api\TopicAlias\StoreTopicAliasRequest;
 use App\Http\Requests\Api\TopicAlias\UpdateTopicAliasRequest;
 use App\Http\Resources\TopicAliasResource;
 use App\Models\TopicAlias;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TopicAliasController extends Controller
@@ -85,7 +84,7 @@ class TopicAliasController extends Controller
     {
         //
 
-DB::beginTransaction();
+        DB::beginTransaction();
 
         try {
             $topicAlias->delete();
