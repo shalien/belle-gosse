@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Provider\StoreProviderRequest;
 use App\Http\Requests\Api\Provider\UpdateProviderRequest;
 use App\Http\Resources\ProviderResource;
+use App\Http\Resources\SourceResource;
 use App\Models\Provider;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,11 @@ class ProviderController extends Controller
     public function show(Provider $provider)
     {
         return new ProviderResource(Provider::findOrFail($provider->id));
+    }
+
+    public function showWithSources(Provider $provider)
+    {
+        return SourceResource::collection($provider->sources);
     }
 
     public function store(StoreProviderRequest $request)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Source\StoreSourceRequest;
 use App\Http\Requests\Api\Source\UpdateSourceRequest;
+use App\Http\Resources\MediaResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Source;
 use Illuminate\Http\JsonResponse;
@@ -28,6 +29,10 @@ class SourceController extends Controller
         $url = base64_decode($request['url']);
 
         return new SourceResource(Source::where('link', '=', $url)->firstOrFail());
+    }
+
+    public function showWithMedias(Source $source) {
+        return MediaResource::collection($source->medias()->get());
     }
 
     /**

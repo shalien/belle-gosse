@@ -46,6 +46,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
     Route::controller(ProviderController::class)->prefix('providers')->group(function () {
         Route::get('/{provider}/topic', 'showWithTopic');
         Route::get('/{provider}/links', 'showWithLinks');
+        Route::get('{provider}/sources', 'showWithSources');
     });
 
     Route::controller(MediaController::class)->prefix('medias')->group(function () {
@@ -58,6 +59,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
     Route::controller(SourceController::class)->prefix('sources')->group(
         function () {
             Route::get('/link/{url}', 'showByLink');
+            Route::get('/{source}/medias', 'showWithMedias');
         }
     );
 
