@@ -8,6 +8,7 @@ use App\Http\Requests\Api\ProviderLink\UpdateProviderLinkRequest;
 use App\Http\Resources\ProviderLinkResource;
 use App\Http\Resources\ProviderResource;
 use App\Models\ProviderLink;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 
@@ -52,9 +53,11 @@ class ProviderLinkController extends Controller
         return new ProviderLinkResource(ProviderLink::with('providers')->findOrFail($providerLink->id));
     }
 
-    public function showWithProviders(ProviderLink $providerLink)
-    {
-        //
+    public function showByProviderType(Request $request) {
+        return ProviderLinkResource::collection(ProviderLink::where('provider_type_id', '=', $request['provider_type_id'])->get());
+    }
+
+    public function showProviders(ProviderLink $providerLink) {
         return ProviderResource::collection(ProviderLink::findOrFail($providerLink->id)->providers);
     }
 

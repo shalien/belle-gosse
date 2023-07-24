@@ -7,6 +7,7 @@ use App\Http\Requests\Api\TopicAlias\StoreTopicAliasRequest;
 use App\Http\Requests\Api\TopicAlias\UpdateTopicAliasRequest;
 use App\Http\Resources\TopicAliasResource;
 use App\Models\TopicAlias;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class TopicAliasController extends Controller
@@ -52,6 +53,10 @@ class TopicAliasController extends Controller
     {
         //
         return new TopicAliasResource(TopicAlias::findOrFail($topicAlias->id));
+    }
+
+    public function showByTopicId(Request $request) {
+        return TopicAliasResource::collection(TopicAlias::where('topic_id', '=', $request['topic_id'])->get());
     }
 
     /**

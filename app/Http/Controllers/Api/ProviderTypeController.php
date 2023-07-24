@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ProviderType\StoreProviderTypeRequest;
 use App\Http\Requests\Api\ProviderType\UpdateProviderTypeRequest;
+use App\Http\Resources\ProviderLinkResource;
 use App\Http\Resources\ProviderTypeResource;
 use App\Models\ProviderType;
 use Illuminate\Http\JsonResponse;
@@ -59,6 +60,10 @@ class ProviderTypeController extends Controller
     public function show(ProviderType $provider_type): ProviderTypeResource
     {
         return new ProviderTypeResource(ProviderType::findOrFail($provider_type->id));
+    }
+
+    public function showProviderLinks(ProviderType $providerType) {
+        return ProviderLinkResource::collection(ProviderType::findOrFail($providerType->id)->providerLinks);
     }
 
     /**

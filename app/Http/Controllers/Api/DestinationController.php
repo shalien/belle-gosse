@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Destination\StoreDestinationRequest;
 use App\Http\Requests\Api\Destination\UpdateDestinationRequest;
 use App\Http\Resources\DestinationResource;
+use App\Http\Resources\MediaResource;
 use App\Models\Destination;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -60,6 +61,12 @@ class DestinationController extends Controller
     {
         //
         return new DestinationResource(Destination::findOrFail($destination->id));
+    }
+
+    public function showMedias(Destination $destination): AnonymousResourceCollection
+    {
+        //
+        return MediaResource::collection(Destination::findOrFail($destination->id)->medias);
     }
 
     /**

@@ -30,6 +30,11 @@ class SourceController extends Controller
         return new SourceResource(Source::where('link', '=', $url)->firstOrFail());
     }
 
+    public function showByProvider(Request $request): AnonymousResourceCollection
+    {
+        return SourceResource::collection(Source::where('provider_id', '=', $request['provider_id'])->get());
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -26,6 +26,16 @@ class MediaController extends Controller
         return new MediaResource(Media::findOrFail($media->id));
     }
 
+    public function showBySource(Request $request): AnonymousResourceCollection
+    {
+        return MediaResource::collection(Media::where('source_id', '=', $request['source_id'])->get());
+    }
+
+    public function showByDestination(Request $request): AnonymousResourceCollection
+    {
+        return MediaResource::collection(Media::where('destination_id', '=', $request['destination_id'])->get());
+    }
+
     public function store(StoreMediaRequest $request)
     {
 

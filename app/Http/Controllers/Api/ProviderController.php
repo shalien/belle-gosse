@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Provider\StoreProviderRequest;
 use App\Http\Requests\Api\Provider\UpdateProviderRequest;
 use App\Http\Resources\ProviderResource;
+use App\Http\Resources\SourceResource;
 use App\Models\Provider;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class ProviderController extends Controller
 {
@@ -23,6 +25,22 @@ class ProviderController extends Controller
     {
         return new ProviderResource(Provider::findOrFail($provider->id));
     }
+
+    public function showByTopic(Request $request)
+    {
+        return ProviderResource::collection(Provider::where('topic_id', '=', $request['topic_id'])->get());
+    }
+
+    public function showByProviderLink(Request $request)
+    {
+        return ProviderResource::collection(Provider::where('provider_link_id', '=', $request['provider_link_id'])->get());
+    }
+
+    public function showSources(Provider $provider) {
+        return SourceResource::collection($provider->sources);
+    }
+
+
 
     public function store(StoreProviderRequest $request)
     {

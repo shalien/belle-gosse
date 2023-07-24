@@ -61,7 +61,7 @@ class TopicController extends Controller
         return new TopicResource($topic::with('topic_aliases', 'providers')->findOrFail($topic->id));
     }
 
-    public function showWithProviders(Topic $topic): AnonymousResourceCollection
+    public function showProviders(Topic $topic): AnonymousResourceCollection
     {
         //
         return ProviderResource::collection(Topic::findOrFail($topic->id)->providers);
