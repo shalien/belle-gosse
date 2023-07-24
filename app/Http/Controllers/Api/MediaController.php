@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Media\StoreMediaRequest;
 use App\Http\Requests\Api\Media\UpdateMediaRequest;
 use App\Http\Resources\MediaResource;
+use App\Models\Destination;
 use App\Models\Media;
+use App\Models\Source;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
@@ -24,6 +26,14 @@ class MediaController extends Controller
     public function show(Media $media): MediaResource
     {
         return new MediaResource(Media::findOrFail($media->id));
+    }
+
+    public function showByDestination(Destination $destination) {
+        return MediaResource::collection(Media::where('destination_id', '=', $destination->id)->get());
+    }
+
+    public function showBySource(Source $source) {
+        return MediaResource::collection(Media::where('source_id', '=', $source->id)->get());
     }
 
     public function store(StoreMediaRequest $request)

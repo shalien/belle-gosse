@@ -50,6 +50,8 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
 
     Route::controller(MediaController::class)->prefix('medias')->group(function () {
         Route::get('/link/{url}', 'showByLink');
+        Route::get('/destination/{destination}', 'showByDestination');
+        Route::get('/source/{source}', 'showBySource');
 
     });
 
