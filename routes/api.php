@@ -60,6 +60,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         function () {
             Route::get('/link/{url}', 'showByLink');
             Route::get('/{source}/medias', 'showWithMedias');
+            Route::get('/destination/{filename}', 'showByFilename');
         }
     );
 

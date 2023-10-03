@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Source\StoreSourceRequest;
 use App\Http\Requests\Api\Source\UpdateSourceRequest;
 use App\Http\Resources\MediaResource;
 use App\Http\Resources\SourceResource;
+use App\Models\Destination;
 use App\Models\Source;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -33,6 +34,19 @@ class SourceController extends Controller
 
     public function showWithMedias(Source $source) {
         return MediaResource::collection($source->medias()->get());
+    }
+
+    public function showByFilename(Request $request): SourceResource
+    {
+        $filename = $request['filename'];
+
+        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
+
+        $media = $destination->medias->first();
+
+        $source = $media->source;
+
+        return new SourceResource($source);
     }
 
     /**
