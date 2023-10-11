@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\SourceController;
 use App\Http\Controllers\Api\TopicAliasController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UnmanagedRedditHostController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +24,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['excluded_middleware' => 'throttle:api'], function () {
+Route::middleware('auth:sanctum')
+    ->withoutMiddleware('throttle:api')
+    ->group(function () {
 
     Route::resources([
         'topics' => TopicController::class,
@@ -36,6 +39,7 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
         'sources' => SourceController::class,
         'destinations' => DestinationController::class,
         'topic_aliases' => TopicAliasController::class,
+        'users' => UserController::class,
     ]);
 
     Route::controller(TopicController::class)->prefix('topics')->group(function () {
@@ -70,4 +74,6 @@ Route::group(['excluded_middleware' => 'throttle:api'], function () {
             Route::get('/{provider_link}/providers', 'showWithProviders');
         }
     );
+
+    Route::controller(UserController::class)->prefix('users');
 });
