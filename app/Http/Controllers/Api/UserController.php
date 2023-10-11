@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\User\StoreUserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -33,7 +35,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
         //
 
@@ -43,6 +45,7 @@ class UserController extends Controller
             DB::beginTransaction();
 
             $user = User::create($request->validated());
+            $user->password = bcrypt(Str::random(32));
 
             $user->save();
 
@@ -83,7 +86,7 @@ class UserController extends Controller
 
         try {
             DB::beginTransaction();
-            $user = User::findOrFail($user->id);
+            $user = User::where('snowflake', $user->snowflake)->firstOrFail();
             $user->update($request->validated());
             $user->save();
         } catch (\Exception $e) {
@@ -94,7 +97,7 @@ class UserController extends Controller
 
         DB::commit();
 
-        return new UserResource(User::findOrFail($user->id));
+        return new UserResource(User::where('snowflake', $user->snowflake)->firstOrFail());
     }
 
     /**
