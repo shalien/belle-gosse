@@ -11,6 +11,9 @@ class Guild extends Model
 
     protected $primaryKey = 'snowflake';
 
+    public $incrementing = false;
+
+
     protected $fillable = ['snowflake', 'name', 'icon'];
 
     public function channels()

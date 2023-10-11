@@ -44,14 +44,8 @@ class UserController extends Controller
         try {
             DB::beginTransaction();
 
-            $user = User::create($request->validated());
-            $user->password = bcrypt(Str::random(32));
 
-            if($request->validated()['email'] != null) {
-                $user->email = $request->validated()['email'];
-            }else {
-                $user->email = $user->snowflake . '@' . 'nonrouted.null';
-            }
+            $user = User::create($request->validated());
 
             $user->save();
 
@@ -73,6 +67,12 @@ class UserController extends Controller
     {
         //
         return new UserResource(User::findOrFail($user->id));
+    }
+
+    public function findUserBySnowflake(string $snowflake)
+    {
+        //
+        return new UserResource(User::where('snowflake', $snowflake)->firstOrFail());
     }
 
     /**

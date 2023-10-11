@@ -11,6 +11,7 @@ class Role extends Model
 
     protected $primaryKey = 'snowflake';
 
+    public $incrementing = false;
     protected $fillable = ['snowflake', 'name'];
 
     public function guild()

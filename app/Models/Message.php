@@ -11,6 +11,8 @@ class Message extends Model
 
     protected $primaryKey = 'snowflake';
 
+    public $incrementing = false;
+
     protected $fillable = [
         'snowflake',
         'content',

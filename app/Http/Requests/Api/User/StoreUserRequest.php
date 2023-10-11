@@ -24,6 +24,8 @@ class StoreUserRequest extends FormRequest
         return [
             //
             'name' => 'required|string',
+            'password' => 'required|string',
+            'email' => 'required|email|unique:users,email',
             'snowflake' => 'numeric',
         ];
     }

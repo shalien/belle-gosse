@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\DestinationController;
+use App\Http\Controllers\Api\GuildController;
 use App\Http\Controllers\Api\IgnoredHostController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\ProviderController;
@@ -40,6 +41,7 @@ Route::middleware('auth:sanctum')
         'destinations' => DestinationController::class,
         'topic_aliases' => TopicAliasController::class,
         'users' => UserController::class,
+        'guilds' => GuildController::class,
     ]);
 
     Route::controller(TopicController::class)->prefix('topics')->group(function () {
@@ -75,5 +77,7 @@ Route::middleware('auth:sanctum')
         }
     );
 
-    Route::controller(UserController::class)->prefix('users');
+    Route::controller(UserController::class)->prefix('users')->group(function(){
+        Route::get('/snowflake/{snowflake}', 'findUserBySnowflake');
+    });
 });

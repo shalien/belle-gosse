@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\Guild;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateUserRequest extends FormRequest
+class StoreGuildRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             //
+            'snowflake' => 'required|int',
             'name' => 'required|string',
-            'email' => 'email|unique:users,email',
-            'snowflake' => 'numeric',
+            'icon' => 'string',
         ];
     }
 }
