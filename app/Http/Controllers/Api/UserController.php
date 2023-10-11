@@ -47,6 +47,12 @@ class UserController extends Controller
             $user = User::create($request->validated());
             $user->password = bcrypt(Str::random(32));
 
+            if($request->validated()['email'] != null) {
+                $user->email = $request->validated()['email'];
+            }else {
+                $user->email = $user->snowflake . '@' . 'nonrouted.null';
+            }
+
             $user->save();
 
         } catch (Exception $e) {
