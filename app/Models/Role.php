@@ -12,7 +12,7 @@ class Role extends Model
     protected $primaryKey = 'snowflake';
 
     public $incrementing = false;
-    protected $fillable = ['snowflake', 'name'];
+    protected $fillable = ['snowflake', 'name', 'guild_snowflake'];
 
     public function guild()
     {

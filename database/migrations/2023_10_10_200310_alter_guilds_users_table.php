@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('guilds_users', function (Blueprint $table) {
+        Schema::table('guild_user', function (Blueprint $table) {
             //
 
-            $table->unsignedBigInteger('guild_id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('guild_snowflake');
+            $table->unsignedBigInteger('user_snowflake');
 
-            $table->foreign('guild_id')->references('snowflake')->on('guilds');
-            $table->foreign('user_id')->references('snowflake')->on('users');
+            $table->foreign('guild_snowflake')->references('snowflake')->on('guilds');
+            $table->foreign('user_snowflake')->references('snowflake')->on('users');
 
-            $table->primary(['guild_id', 'user_id']);
+            $table->primary(['guild_snowflake', 'user_snowflake']);
         });
     }
 
@@ -29,7 +29,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('guilds_users', function (Blueprint $table) {
+        Schema::table('guild_user', function (Blueprint $table) {
             //
         });
     }

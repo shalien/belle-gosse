@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('guilds_users', function (Blueprint $table) {
+        Schema::create('guild_user', function (Blueprint $table) {
             $table->timestamps();
         });
     }
@@ -21,6 +21,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('guilds_users');
+        Schema::dropIfExists('guild_user');
     }
 };

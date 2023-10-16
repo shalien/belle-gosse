@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('roles', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('guild_id')->nullable();
-            $table->foreign('guild_id')->references('snowflake')->on('guilds')->onDelete('cascade');
+            $table->unsignedBigInteger('guild_snowflake')->nullable();
+            $table->foreign('guild_snowflake')->references('snowflake')->on('guilds')->onDelete('cascade');
         });
     }
 

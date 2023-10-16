@@ -16,8 +16,8 @@ class Message extends Model
     protected $fillable = [
         'snowflake',
         'content',
-        'user_id',
-        'channel_id',
+        'user_snowflake',
+        'channel_snowflake',
     ];
 
     public function user() {

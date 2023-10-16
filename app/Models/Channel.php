@@ -13,7 +13,11 @@ class Channel extends Model
 
     public $incrementing = false;
 
-    protected $fillable = ['snowflake', 'name'];
+    protected $fillable = [
+        'snowflake',
+        'name',
+        'guild_snowflake'
+    ];
 
     public function guild()
     {

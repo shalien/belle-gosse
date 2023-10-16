@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Guild\StoreGuildRequest;
 
 use App\Http\Requests\Api\Guild\UpdateGuildRequest;
 use App\Http\Resources\GuildResource;
+use App\Http\Resources\UserResource;
 use App\Models\Guild;
 
 use Illuminate\Http\Request;
@@ -64,7 +65,6 @@ class GuildController extends Controller
     public function show(Guild $guild)
     {
         //
-
         return new GuildResource(Guild::findOrFail($guild->snowflake));
     }
 
@@ -120,5 +120,12 @@ class GuildController extends Controller
 
        return  response()->json(['message' => 'Guild deleted successfully'], Response::HTTP_OK);
 
+    }
+
+
+    public function getUsers(Guild $guild)
+    {
+        //
+        return UserResource::collection(Guild::findOrFail($guild->snowflake)->users);
     }
 }

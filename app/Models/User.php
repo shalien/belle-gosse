@@ -44,7 +44,7 @@ class User extends Authenticatable
     ];
 
     public function guilds() {
-        return $this->belongsToMany(Guild::class);
+        return $this->belongsToMany(Guild::class, 'guild_user', 'guild_snowflake', 'user_snowflake', 'snowflake', 'snowflake');
     }
 
     public function roles() {

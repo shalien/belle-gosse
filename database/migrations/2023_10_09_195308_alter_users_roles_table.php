@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::table('users_roles', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('snowflake')->on('users');
+            $table->unsignedBigInteger('user_snowflake')->nullable();
+            $table->foreign('user_snowflake')->references('snowflake')->on('users');
 
-            $table->unsignedBigInteger('role_id')->nullable();
-            $table->foreign('role_id')->references('snowflake')->on('roles');
+            $table->unsignedBigInteger('role_snowflake')->nullable();
+            $table->foreign('role_snowflake')->references('snowflake')->on('roles');
         });
     }
 
@@ -28,8 +28,8 @@ return new class extends Migration
     {
         Schema::table('users_roles', function (Blueprint $table) {
             //
-            $table->dropForeign(['user_id']);
-            $table->dropForeign(['role_id']);
+            $table->dropForeign(['user_snowflake']);
+            $table->dropForeign(['role_snowflake']);
         });
     }
 };

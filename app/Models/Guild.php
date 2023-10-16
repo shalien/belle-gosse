@@ -14,7 +14,11 @@ class Guild extends Model
     public $incrementing = false;
 
 
-    protected $fillable = ['snowflake', 'name', 'icon'];
+    protected $fillable = [
+        'snowflake',
+        'name',
+        'icon'
+    ];
 
     public function channels()
     {
@@ -23,6 +27,6 @@ class Guild extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'guild_user', 'user_snowflake', 'guild_snowflake', 'snowflake', 'snowflake');
     }
 }

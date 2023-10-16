@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\DestinationController;
 use App\Http\Controllers\Api\GuildController;
 use App\Http\Controllers\Api\IgnoredHostController;
 use App\Http\Controllers\Api\MediaController;
+use App\Http\Controllers\Api\ProhibitedDomainController;
 use App\Http\Controllers\Api\ProviderController;
 use App\Http\Controllers\Api\ProviderLinkController;
 use App\Http\Controllers\Api\ProviderTypeController;
@@ -42,6 +43,7 @@ Route::middleware('auth:sanctum')
         'topic_aliases' => TopicAliasController::class,
         'users' => UserController::class,
         'guilds' => GuildController::class,
+        'prohibited_domains' => ProhibitedDomainController::class,
     ]);
 
     Route::controller(TopicController::class)->prefix('topics')->group(function () {
@@ -79,5 +81,10 @@ Route::middleware('auth:sanctum')
 
     Route::controller(UserController::class)->prefix('users')->group(function(){
         Route::get('/snowflake/{snowflake}', 'findUserBySnowflake');
+    });
+
+    Route::controller(GuildController::class)->prefix('guilds')->group(function(){
+        Route::get('/snowflake/{snowflake}', 'findGuildBySnowflake');
+        Route::get('/{guild}/users', 'getUsers');
     });
 });

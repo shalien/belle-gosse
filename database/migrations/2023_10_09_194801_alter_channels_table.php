@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::table('channels', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('guild_id')->nullable()->after('snowflake');
-            $table->foreign('guild_id')->references('snowflake')->on('guilds')->onDelete('cascade');
+            $table->unsignedBigInteger('guild_snowflake')->nullable()->after('snowflake');
+            $table->foreign('guild_snowflake')->references('snowflake')->on('guilds')->onDelete('cascade');
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
     {
         Schema::table('channels', function (Blueprint $table) {
             //
-            $table->dropForeign(['guild_id']);
+            $table->dropForeign(['guild_snowflake']);
         });
     }
 };
