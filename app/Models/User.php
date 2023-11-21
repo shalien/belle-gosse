@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'snowflake'
+        'snowflake',
     ];
 
     /**
@@ -43,11 +43,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function guilds() {
+    public function guilds()
+    {
         return $this->belongsToMany(Guild::class, 'guild_user', 'guild_snowflake', 'user_snowflake', 'snowflake', 'snowflake');
     }
 
-    public function roles() {
+    public function roles()
+    {
         return $this->belongsToMany(Role::class);
     }
 }

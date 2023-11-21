@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ProhibitedDomain\StoreProhibitedDomainRequest;
 use App\Http\Resources\ProhibitedDomainResource;
-use App\Models\Media;
 use App\Models\ProhibitedDomain;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -56,6 +55,7 @@ class ProhibitedDomainController extends Controller
 
         return new ProhibitedDomainResource($prohibitedDomain);
     }
+
     /**
      * Display the specified resource.
      */

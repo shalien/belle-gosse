@@ -28,11 +28,13 @@ class MediaController extends Controller
         return new MediaResource(Media::findOrFail($media->id));
     }
 
-    public function showByDestination(Destination $destination) {
+    public function showByDestination(Destination $destination)
+    {
         return MediaResource::collection(Media::where('destination_id', '=', $destination->id)->get());
     }
 
-    public function showBySource(Source $source) {
+    public function showBySource(Source $source)
+    {
         return MediaResource::collection(Media::where('source_id', '=', $source->id)->get());
     }
 

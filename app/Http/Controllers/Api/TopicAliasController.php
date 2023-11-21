@@ -69,6 +69,7 @@ class TopicAliasController extends Controller
             $topicAlias->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], 409);
         }
 
@@ -90,6 +91,7 @@ class TopicAliasController extends Controller
             $topicAlias->delete();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], 409);
         }
 

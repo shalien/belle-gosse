@@ -20,15 +20,18 @@ class Message extends Model
         'channel_snowflake',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function channel() {
+    public function channel()
+    {
         return $this->belongsTo(Channel::class);
     }
 
-    public function parent() {
+    public function parent()
+    {
         return $this->belongsTo(Message::class);
     }
 }

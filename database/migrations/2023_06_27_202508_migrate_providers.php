@@ -6,7 +6,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -17,7 +18,7 @@ return new class extends Migration {
         foreach ($providers as $provider) {
             $provider_link = ProviderLink::where('link', $provider->link)->first();
 
-            if (!$provider_link) {
+            if (! $provider_link) {
                 $provider_link = ProviderLink::create([
                     'link' => $provider->link,
                     'provider_type_id' => $provider->provider_type_id,

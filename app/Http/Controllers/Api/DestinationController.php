@@ -52,9 +52,6 @@ class DestinationController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param Destination $destination
-     * @return DestinationResource
      */
     public function show(Destination $destination): DestinationResource
     {

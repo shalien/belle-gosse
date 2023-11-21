@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('messages', function (Blueprint $table) {
-$table->unsignedBigInteger('snowflake')->unique()->primary();
-$table->string('content')->nullable();
+            $table->unsignedBigInteger('snowflake')->unique()->primary();
+            $table->string('content')->nullable();
             $table->timestamps();
         });
     }

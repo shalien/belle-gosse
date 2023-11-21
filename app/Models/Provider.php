@@ -15,7 +15,6 @@ class Provider extends Model
         'prefix',
     ];
 
-
     public function topic()
     {
         return $this->belongsTo(Topic::class);

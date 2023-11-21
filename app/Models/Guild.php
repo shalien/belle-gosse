@@ -13,11 +13,10 @@ class Guild extends Model
 
     public $incrementing = false;
 
-
     protected $fillable = [
         'snowflake',
         'name',
-        'icon'
+        'icon',
     ];
 
     public function channels()

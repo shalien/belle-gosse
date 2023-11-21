@@ -25,7 +25,7 @@ class UpdateTopicAliasRequest extends FormRequest
         return [
             //
             'alias' => 'required|string',
-            'topic_id' => 'required|integer|exists:topics,id'
+            'topic_id' => 'required|integer|exists:topics,id',
         ];
     }
 }

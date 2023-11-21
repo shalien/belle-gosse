@@ -52,9 +52,6 @@ class ProviderTypeController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param ProviderType $provider_type
-     * @return ProviderTypeResource
      */
     public function show(ProviderType $provider_type): ProviderTypeResource
     {
@@ -86,7 +83,6 @@ class ProviderTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param ProviderType $provider_type
      * @return JsonResponse
      */
     public function destroy(ProviderType $provider_type)

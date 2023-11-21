@@ -32,7 +32,8 @@ class SourceController extends Controller
         return new SourceResource(Source::where('link', '=', $url)->firstOrFail());
     }
 
-    public function showWithMedias(Source $source) {
+    public function showWithMedias(Source $source)
+    {
         return MediaResource::collection($source->medias()->get());
     }
 
@@ -80,7 +81,7 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return SourceResource
      */
     public function show(Source $source)
@@ -92,8 +93,6 @@ class SourceController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param UpdateSourceRequest $request
-     * @param Source $source
      * @return SourceResource|JsonResponse
      */
     public function update(UpdateSourceRequest $request, Source $source)
@@ -118,7 +117,6 @@ class SourceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Source $source
      * @return JsonResponse
      */
     public function destroy(Source $source)

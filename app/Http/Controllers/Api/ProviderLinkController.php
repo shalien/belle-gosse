@@ -35,6 +35,7 @@ class ProviderLinkController extends Controller
             $providerLink->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], 409);
         }
 
@@ -71,10 +72,10 @@ class ProviderLinkController extends Controller
         try {
             $providerLink->update($request->validated());
 
-
             $providerLink->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], 409);
         }
 
@@ -97,6 +98,7 @@ class ProviderLinkController extends Controller
             $providerLink->delete();
         } catch (\Exception $e) {
             DB::rollBack();
+
             return response()->json(['error' => $e->getMessage()], 409);
         }
 

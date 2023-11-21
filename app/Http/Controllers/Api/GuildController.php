@@ -4,13 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Guild\StoreGuildRequest;
-
 use App\Http\Requests\Api\Guild\UpdateGuildRequest;
 use App\Http\Resources\GuildResource;
 use App\Http\Resources\UserResource;
 use App\Models\Guild;
-
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -118,10 +115,9 @@ class GuildController extends Controller
 
         DB::commit();
 
-       return  response()->json(['message' => 'Guild deleted successfully'], Response::HTTP_OK);
+        return response()->json(['message' => 'Guild deleted successfully'], Response::HTTP_OK);
 
     }
-
 
     public function getUsers(Guild $guild)
     {

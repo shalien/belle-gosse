@@ -16,7 +16,7 @@ class Channel extends Model
     protected $fillable = [
         'snowflake',
         'name',
-        'guild_snowflake'
+        'guild_snowflake',
     ];
 
     public function guild()
