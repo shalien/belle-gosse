@@ -7,7 +7,7 @@ use App\Http\Requests\Api\Provider\StoreProviderRequest;
 use App\Http\Requests\Api\Provider\UpdateProviderRequest;
 use App\Http\Resources\ProviderResource;
 use App\Http\Resources\SourceResource;
-use App\Models\Provider;
+use App\Models\OldProvider;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -17,15 +17,15 @@ class ProviderController extends Controller
 
     public function index()
     {
-        return ProviderResource::collection(Provider::all());
+        return ProviderResource::collection(OldProvider::all());
     }
 
-    public function show(Provider $provider)
+    public function show(OldProvider $provider)
     {
-        return new ProviderResource(Provider::findOrFail($provider->id));
+        return new ProviderResource(OldProvider::findOrFail($provider->id));
     }
 
-    public function showWithSources(Provider $provider)
+    public function showWithSources(OldProvider $provider)
     {
         return SourceResource::collection($provider->sources);
     }
@@ -38,7 +38,7 @@ class ProviderController extends Controller
         try {
             DB::beginTransaction();
 
-            $provider = Provider::create($request->validated());
+            $provider = OldProvider::create($request->validated());
 
             $provider->topic()->associate($request->validated()['topic_id']);
 
@@ -53,10 +53,10 @@ class ProviderController extends Controller
 
         DB::commit();
 
-        return new ProviderResource(Provider::findOrFail($provider->id));
+        return new ProviderResource(OldProvider::findOrFail($provider->id));
     }
 
-    public function update(UpdateProviderRequest $request, Provider $provider)
+    public function update(UpdateProviderRequest $request, OldProvider $provider)
     {
         try {
             DB::beginTransaction();
@@ -76,13 +76,13 @@ class ProviderController extends Controller
 
         DB::commit();
 
-        return new ProviderResource(Provider::findOrFail($provider->id));
+        return new ProviderResource(OldProvider::findOrFail($provider->id));
     }
 
-    public function destroy(Provider $provider)
+    public function destroy(OldProvider $provider)
     {
         return $provider->delete()
-            ? response()->json(['message' => 'Provider deleted successfully'], Response::HTTP_NO_CONTENT)
+            ? response()->json(['message' => 'OldProvider deleted successfully'], Response::HTTP_NO_CONTENT)
             : response()->json(['message' => 'Unable to delete provider'], Response::HTTP_INTERNAL_SERVER_ERROR);
 
     }

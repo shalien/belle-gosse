@@ -16,7 +16,7 @@ class Topic extends Model
 
     public function providers()
     {
-        return $this->hasMany(Provider::class);
+        return $this->hasMany(OldProvider::class);
     }
 
     public function topic_aliases()

@@ -13,7 +13,7 @@ class Source extends Model
 
     public function provider()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(OldProvider::class);
     }
 
     public function medias()

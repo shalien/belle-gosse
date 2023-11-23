@@ -104,6 +104,6 @@ class ProviderLinkController extends Controller
 
         DB::commit();
 
-        return response()->json(['message' => 'Provider link deleted successfully'], 200);
+        return response()->json(['message' => 'OldProvider link deleted successfully'], 200);
     }
 }

@@ -10,23 +10,17 @@ class Provider extends Model
     use HasFactory;
 
     protected $fillable = [
-        'link',
-        'topic_id',
-        'prefix',
+        'host',
+        'provider_type_id',
     ];
 
-    public function topic()
+    public function queries()
     {
-        return $this->belongsTo(Topic::class);
+        return $this->hasMany(Query::class);
     }
 
-    public function sources()
+    public function provider_type()
     {
-        return $this->hasMany(Source::class);
-    }
-
-    public function provider_link()
-    {
-        return $this->belongsTo(ProviderLink::class);
+        return $this->belongsTo(ProviderType::class);
     }
 }

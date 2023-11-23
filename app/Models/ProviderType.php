@@ -16,6 +16,11 @@ class ProviderType extends Model
         return $this->hasMany(ProviderLink::class);
     }
 
+    public function providers()
+    {
+        return $this->hasMany(Provider::class);
+    }
+
     public function ignored_hosts()
     {
         return $this->belongsToMany(IgnoredHost::class);
