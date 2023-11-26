@@ -28,16 +28,6 @@ class MediaController extends Controller
         return new MediaResource(Media::findOrFail($media->id));
     }
 
-    public function showByDestination(Destination $destination)
-    {
-        return MediaResource::collection(Media::where('destination_id', '=', $destination->id)->get());
-    }
-
-    public function showBySource(Source $source)
-    {
-        return MediaResource::collection(Media::where('source_id', '=', $source->id)->get());
-    }
-
     public function store(StoreMediaRequest $request)
     {
 
@@ -88,10 +78,21 @@ class MediaController extends Controller
         return new MediaResource($media);
     }
 
+
     public function showByLink(Request $request): MediaResource
     {
         $url = base64_decode($request['url']);
 
         return new MediaResource(Media::where('link', '=', $url)->firstOrFail());
+    }
+
+    public function showByDestination(Destination $destination)
+    {
+        return MediaResource::collection(Media::where('destination_id', '=', $destination->id)->get());
+    }
+
+    public function showBySource(Source $source)
+    {
+        return MediaResource::collection(Media::where('source_id', '=', $source->id)->get());
     }
 }

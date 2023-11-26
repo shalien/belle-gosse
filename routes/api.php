@@ -36,6 +36,13 @@ Route::middleware('auth:sanctum')
             'suppliers' => SupplierController::class,
         ]);
 
+        Route::controller(MediaController::class)->prefix('medias')->group(function () {
+            Route::get('/link/{url}', 'showByLink');
+            Route::get('/destination/{destination}', 'showByDestination');
+            Route::get('/source/{source}', 'showBySource');
+
+        });
+
         Route::controller(TopicController::class)->prefix('topics')->group(function () {
             Route::get('/{topic}/paths', 'showTopicPaths');
         });
@@ -51,12 +58,7 @@ Route::middleware('auth:sanctum')
             Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
         });
 
-        Route::controller(MediaController::class)->prefix('medias')->group(function () {
-            Route::get('/link/{url}', 'showByLink');
-            Route::get('/destination/{destination}', 'showByDestination');
-            Route::get('/source/{source}', 'showBySource');
 
-        });
 
         Route::controller(SourceController::class)->prefix('sources')->group(
             function () {
