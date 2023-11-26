@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Api\Supplier\UpdateSupplierRequest;
+use App\Http\Resources\PathResource;
+use App\Http\Resources\ProviderTypeResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -86,5 +88,15 @@ return new SupplierResource($supplier);
         $supplier->delete();
 
         return response()->json(null, 204);
+    }
+
+    public function showSupplierPaths(Supplier $supplier)
+    {
+        return PathResource::collection($supplier->paths);
+    }
+
+    public function showSupplierProviderType(Supplier $supplier)
+    {
+        return new ProviderTypeResource($supplier->providerType);
     }
 }

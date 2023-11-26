@@ -8,9 +8,12 @@ use App\Http\Requests\Api\Path\UpdatePathRequest;
 use App\Http\Resources\PathResource;
 
 use App\Http\Resources\SourceResource;
+use App\Http\Resources\SupplierResource;
+use App\Http\Resources\TopicResource;
 use App\Models\Path;
 
 use App\Models\Source;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
@@ -118,5 +121,23 @@ class PathController extends Controller
         $path = Path::findOrFail($id);
 
         $path->delete();
+    }
+
+    public function showPathSources(Path $path)
+    {
+        //
+        return SourceResource::collection(Path::findOrFail($path->id)->sources);
+    }
+
+    public function showPathTopics(Path $path)
+    {
+        //
+        return TopicResource::collection(Path::findOrFail($path->id)->topics);
+    }
+
+    public function showPathSuppliers(Supplier $supplier)
+    {
+        //
+        return SupplierResource::collection(Supplier::findOrFail($supplier->id)->suppliers);
     }
 }

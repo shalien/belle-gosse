@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\PathController;
 use App\Http\Controllers\Api\ProviderTypeController;
 use App\Http\Controllers\Api\SourceController;
+use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,12 +33,23 @@ Route::middleware('auth:sanctum')
             'destinations' => DestinationController::class,
             'users' => UserController::class,
             'paths' => PathController::class,
+            'suppliers' => SupplierController::class,
         ]);
 
         Route::controller(TopicController::class)->prefix('topics')->group(function () {
-            Route::get('/{topic}/providers', 'showWithProviders');
+            Route::get('/{topic}/paths', 'showTopicPaths');
         });
 
+        Route::controller(PathController::class)->prefix('paths')->group(function () {
+            Route::get('/{path}/sources', 'showPathSources');
+            Route::get('/{path}/topics', 'showPathDestinations');
+            Route::get('/{path}/suppliers', 'showPathDestinations');
+        });
+
+        Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
+            Route::get('/{supplier}/paths', 'showSupplierPaths');
+            Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
+        });
 
         Route::controller(MediaController::class)->prefix('medias')->group(function () {
             Route::get('/link/{url}', 'showByLink');

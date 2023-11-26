@@ -7,6 +7,7 @@ use App\Http\Requests\Api\Topic\StoreTopicRequest;
 use App\Http\Requests\Api\Topic\UpdateTopicRequest;
 use App\Http\Resources\_OLD\ProviderResource;
 use App\Http\Resources\_OLD\TopicAliasResource;
+use App\Http\Resources\PathResource;
 use App\Http\Resources\TopicResource;
 use App\Models\Topic;
 use Exception;
@@ -105,5 +106,11 @@ class TopicController extends Controller
         return $topic->delete()
             ? response()->json(null, Response::HTTP_NO_CONTENT)
             : response()->json(['error' => 'Error deleting'], Response::HTTP_CONFLICT);
+    }
+
+
+    public function showTopicPaths(Topic $topic): AnonymousResourceCollection
+    {
+        return PathResource::collection(Topic::findOrFail($topic->id)->paths);
     }
 }
