@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Source\StoreSourceRequest;
 use App\Http\Requests\Api\Source\UpdateSourceRequest;
 use App\Http\Resources\MediaResource;
+use App\Http\Resources\PathResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Destination;
 use App\Models\Source;
@@ -48,6 +49,12 @@ class SourceController extends Controller
         $source = $media->source;
 
         return new SourceResource($source);
+    }
+
+    public function showSourceQuery(Source $source)
+    {
+
+        return new PathResource($source->queryy());
     }
 
     /**

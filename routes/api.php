@@ -1,17 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\DestinationController;
-use App\Http\Controllers\Api\GuildController;
-use App\Http\Controllers\Api\IgnoredHostController;
 use App\Http\Controllers\Api\MediaController;
-use App\Http\Controllers\Api\ProhibitedDomainController;
-use App\Http\Controllers\Api\ProviderController;
-use App\Http\Controllers\Api\ProviderLinkController;
+use App\Http\Controllers\Api\PathController;
 use App\Http\Controllers\Api\ProviderTypeController;
 use App\Http\Controllers\Api\SourceController;
-use App\Http\Controllers\Api\TopicAliasController;
 use App\Http\Controllers\Api\TopicController;
-use App\Http\Controllers\Api\UnmanagedRedditHostController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,30 +26,18 @@ Route::middleware('auth:sanctum')
 
         Route::resources([
             'topics' => TopicController::class,
-            'providers' => ProviderController::class,
-            'provider_links' => ProviderLinkController::class,
             'medias' => MediaController::class,
-            'unmanaged_hosts' => UnmanagedRedditHostController::class,
-            'ignored_hosts' => IgnoredHostController::class,
             'provider_types' => ProviderTypeController::class,
             'sources' => SourceController::class,
             'destinations' => DestinationController::class,
-            'topic_aliases' => TopicAliasController::class,
             'users' => UserController::class,
-            'guilds' => GuildController::class,
-            'prohibited_domains' => ProhibitedDomainController::class,
+            'paths' => PathController::class,
         ]);
 
         Route::controller(TopicController::class)->prefix('topics')->group(function () {
             Route::get('/{topic}/providers', 'showWithProviders');
-            Route::get('/{topic}/alias', 'showWithAliases');
         });
 
-        Route::controller(ProviderController::class)->prefix('providers')->group(function () {
-            Route::get('/{provider}/topic', 'showWithTopic');
-            Route::get('/{provider}/links', 'showWithLinks');
-            Route::get('{provider}/sources', 'showWithSources');
-        });
 
         Route::controller(MediaController::class)->prefix('medias')->group(function () {
             Route::get('/link/{url}', 'showByLink');
@@ -69,22 +51,8 @@ Route::middleware('auth:sanctum')
                 Route::get('/link/{url}', 'showByLink');
                 Route::get('/{source}/medias', 'showWithMedias');
                 Route::get('/destination/{filename}', 'showByFilename');
+                Route::get('/{source}/query', 'showSourceQuery');
             }
         );
 
-        Route::controller(ProviderLinkController::class)->prefix('provider_links')->group(
-            function () {
-                Route::get('/link/{url}', 'showByLink');
-                Route::get('/{provider_link}/providers', 'showWithProviders');
-            }
-        );
-
-        Route::controller(UserController::class)->prefix('users')->group(function () {
-            Route::get('/snowflake/{snowflake}', 'findUserBySnowflake');
-        });
-
-        Route::controller(GuildController::class)->prefix('guilds')->group(function () {
-            Route::get('/snowflake/{snowflake}', 'findGuildBySnowflake');
-            Route::get('/{guild}/users', 'getUsers');
-        });
     });

@@ -90,7 +90,7 @@ class ProviderTypeController extends Controller
         //
 
         return $provider_type->delete()
-            ? response()->json(['message' => 'OldProvider Type deleted successfully'], Response::HTTP_NO_CONTENT)
-            : response()->json(['message' => 'OldProvider Type could not be deleted'], Response::HTTP_INTERNAL_SERVER_ERROR);
+            ? response()->json(['message' => 'Provider Type deleted successfully'], Response::HTTP_NO_CONTENT)
+            : response()->json(['message' => 'Provider Type could not be deleted'], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

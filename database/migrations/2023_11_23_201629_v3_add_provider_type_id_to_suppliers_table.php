@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
+        Schema::table('suppliers', function (Blueprint $table) {
             //
+            $table->unsignedBigInteger('provider_type_id')->nullable();
+            $table->foreign('provider_type_id')->references('id')->on('provider_types');
 
-            $table->foreign('topic_id')->references('id')->on('topics');
         });
     }
 
@@ -23,9 +24,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
+        Schema::table('suppliers', function (Blueprint $table) {
             //
-            $table->dropForeign(['topic_id']);
+            $table->dropForeign(['provider_type_id']);
+            $table->dropColumn('provider_type_id');
         });
     }
 };

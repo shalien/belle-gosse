@@ -11,11 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
+        //
 
-            $table->foreign('topic_id')->references('id')->on('topics');
-        });
+        Schema::disableForeignKeyConstraints();
+
+        Schema::dropIfExists('topic_aliases');
+
+        Schema::enableForeignKeyConstraints();
+
     }
 
     /**
@@ -23,9 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
-            $table->dropForeign(['topic_id']);
-        });
+        //
     }
 };

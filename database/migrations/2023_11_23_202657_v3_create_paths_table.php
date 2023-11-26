@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
+        Schema::create('paths', function (Blueprint $table) {
+            $table->id();
+            $table->string('content')->unique();
+            $table->timestamps();
 
-            $table->foreign('topic_id')->references('id')->on('topics');
+            $table->index('content');
         });
     }
 
@@ -23,9 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
-            $table->dropForeign(['topic_id']);
-        });
+        Schema::dropIfExists('paths');
     }
 };

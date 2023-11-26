@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
-
-            $table->foreign('topic_id')->references('id')->on('topics');
+        Schema::create('path_topic', function (Blueprint $table) {
+            $table->unsignedBigInteger('path_id');
+            $table->unsignedBigInteger('topic_id');
         });
     }
 
@@ -23,9 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
-            $table->dropForeign(['topic_id']);
-        });
+        Schema::dropIfExists('path_topic');
     }
 };

@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::table('path_topic', function (Blueprint $table) {
             //
-
-            $table->foreign('topic_id')->references('id')->on('topics');
+            $table->foreign('path_id')->references('id')->on('paths');
         });
     }
 
@@ -25,7 +24,7 @@ return new class extends Migration
     {
         Schema::table('path_topic', function (Blueprint $table) {
             //
-            $table->dropForeign(['topic_id']);
+            $table->dropForeign(['path_id']);
         });
     }
 };
