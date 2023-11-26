@@ -135,9 +135,9 @@ class PathController extends Controller
         return TopicResource::collection(Path::findOrFail($path->id)->topics);
     }
 
-    public function showPathSuppliers(Supplier $supplier)
+    public function showPathSuppliers(Path $path)
     {
         //
-        return SupplierResource::collection(Supplier::findOrFail($supplier->id)->suppliers);
+        return SupplierResource::collection(Path::findOrFail($path->id)->suppliers);
     }
 }

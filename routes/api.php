@@ -42,8 +42,8 @@ Route::middleware('auth:sanctum')
 
         Route::controller(PathController::class)->prefix('paths')->group(function () {
             Route::get('/{path}/sources', 'showPathSources');
-            Route::get('/{path}/topics', 'showPathDestinations');
-            Route::get('/{path}/suppliers', 'showPathDestinations');
+            Route::get('/{path}/topics', 'showPathTopics');
+            Route::get('/{path}/suppliers', 'showPathSuppliers');
         });
 
         Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
