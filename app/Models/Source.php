@@ -10,7 +10,7 @@ class Source extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['link', 'provider_id'];
+    protected $fillable = ['link', 'path_id'];
 
    // deprecated
     public function provider()
