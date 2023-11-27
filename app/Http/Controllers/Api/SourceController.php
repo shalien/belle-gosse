@@ -41,7 +41,7 @@ class SourceController extends Controller
             DB::beginTransaction();
             $source = Source::create($request->validated());
 
-            $source->provider()->associate($request->validated()['provider_id']);
+            $source->path()->associate($request->validated()['path_id']);
 
             $source->save();
         } catch (\Exception $e) {
