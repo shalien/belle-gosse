@@ -36,6 +36,10 @@ Route::middleware('auth:sanctum')
             'suppliers' => SupplierController::class,
         ]);
 
+        Route::controller(DestinationController::class)->prefix('destinations')->group(function () {
+            Route::get('/filename', 'showByFilename');
+        });
+
         Route::controller(MediaController::class)->prefix('medias')->group(function () {
             Route::get('/link/{url}', 'showByLink');
             Route::get('/destination/{destination}', 'showByDestination');

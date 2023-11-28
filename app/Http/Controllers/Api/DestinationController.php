@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Destination\StoreDestinationRequest;
 use App\Http\Requests\Api\Destination\UpdateDestinationRequest;
 use App\Http\Resources\DestinationResource;
+use App\Http\Resources\SourceResource;
 use App\Models\Destination;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -93,5 +94,26 @@ class DestinationController extends Controller
         return $destination->delete()
             ? response()->json(null, ResponseAlias::HTTP_NO_CONTENT)
             : response()->json(['error' => 'Error deleting'], ResponseAlias::HTTP_CONFLICT);
+    }
+
+
+    public function showByFilename(string $filename)
+    {
+        //
+        $destination = Destination::where('filename', $filename)->firstOrFail();
+
+        if($destination) {
+
+            $medias = $destination->medias;
+            $source = $medias->first()->source;
+
+            return new SourceResource($source);
+
+        } else {
+            return response()->json(['error' => 'Error finding destination'], ResponseAlias::HTTP_CONFLICT);
+        }
+
+
+
     }
 }
