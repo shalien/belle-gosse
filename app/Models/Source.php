@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\_OLD\Provider;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,13 +9,7 @@ class Source extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['link', 'provider_id'];
-
-   // deprecated
-    public function provider()
-    {
-        return $this->belongsTo(Provider::class);
-    }
+    protected $fillable = ['link', 'path_id'];
 
 
     public function path()

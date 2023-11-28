@@ -9,7 +9,6 @@ use App\Http\Resources\PathResource;
 use App\Http\Resources\ProviderTypeResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
-use Illuminate\Http\Request;
 
 class SupplierController extends Controller
 {

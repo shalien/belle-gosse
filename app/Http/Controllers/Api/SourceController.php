@@ -26,36 +26,6 @@ class SourceController extends Controller
         return SourceResource::collection(Source::all());
     }
 
-    public function showByLink(Request $request): SourceResource
-    {
-        $url = base64_decode($request['url']);
-
-        return new SourceResource(Source::where('link', '=', $url)->firstOrFail());
-    }
-
-    public function showWithMedias(Source $source)
-    {
-        return MediaResource::collection($source->medias()->get());
-    }
-
-    public function showByFilename(Request $request): SourceResource
-    {
-        $filename = $request['filename'];
-
-        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
-
-        $media = $destination->medias->first();
-
-        $source = $media->source;
-
-        return new SourceResource($source);
-    }
-
-    public function showSourceQuery(Source $source)
-    {
-
-        return new PathResource($source->queryy());
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -71,7 +41,7 @@ class SourceController extends Controller
             DB::beginTransaction();
             $source = Source::create($request->validated());
 
-            $source->provider()->associate($request->validated()['provider_id']);
+            $source->path()->associate($request->validated()['path_id']);
 
             $source->save();
         } catch (\Exception $e) {
@@ -132,5 +102,37 @@ class SourceController extends Controller
         return $source->delete() ?
             response()->json(['message' => 'Source deleted successfully'], Response::HTTP_OK) :
             response()->json(['message' => 'Source not deleted'], Response::HTTP_CONFLICT);
+    }
+
+
+    public function showByLink(Request $request): SourceResource
+    {
+        $url = base64_decode($request['url']);
+
+        return new SourceResource(Source::where('link', '=', $url)->firstOrFail());
+    }
+
+    public function showWithMedias(Source $source)
+    {
+        return MediaResource::collection($source->medias()->get());
+    }
+
+    public function showByFilename(Request $request): SourceResource
+    {
+        $filename = $request['filename'];
+
+        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
+
+        $media = $destination->medias->first();
+
+        $source = $media->source;
+
+        return new SourceResource($source);
+    }
+
+    public function showSourceQuery(Source $source)
+    {
+
+        return new PathResource($source->queryy());
     }
 }
