@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')
         ]);
 
         Route::controller(DestinationController::class)->prefix('destinations')->group(function () {
-            Route::get('/filename', 'showByFilename');
+            Route::get('/filename/{filename}', 'showByFilename');
         });
 
         Route::controller(MediaController::class)->prefix('medias')->group(function () {
