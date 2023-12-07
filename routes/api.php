@@ -62,6 +62,9 @@ Route::middleware('auth:sanctum')
             Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
         });
 
+        Route::controller(ProviderTypeController::class)->prefix('provider_types')->group(function () {
+            Route::get('/{provider_type}/suppliers', 'showProviderTypeSuppliers');
+        });
 
 
         Route::controller(SourceController::class)->prefix('sources')->group(

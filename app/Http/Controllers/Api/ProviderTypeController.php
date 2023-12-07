@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ProviderType\StoreProviderTypeRequest;
 use App\Http\Requests\Api\ProviderType\UpdateProviderTypeRequest;
 use App\Http\Resources\ProviderTypeResource;
+use App\Http\Resources\SupplierResource;
 use App\Models\ProviderType;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -92,5 +93,11 @@ class ProviderTypeController extends Controller
         return $provider_type->delete()
             ? response()->json(['message' => 'Provider Type deleted successfully'], Response::HTTP_NO_CONTENT)
             : response()->json(['message' => 'Provider Type could not be deleted'], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+
+    public function showProviderTypeSuppliers(ProviderType $provider_type): AnonymousResourceCollection
+    {
+        return SupplierResource::collection(ProviderType::findOrFail($provider_type->id)->suppliers);
     }
 }
