@@ -58,7 +58,7 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return SourceResource
      */
     public function show(Source $source)
@@ -121,7 +121,7 @@ class SourceController extends Controller
     {
         $filename = $request['filename'];
 
-        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
+        $destination = Destination::where('filename', 'LIKE', '%' . $filename . '%')->firstOrFail();
 
         $media = $destination->medias->first();
 

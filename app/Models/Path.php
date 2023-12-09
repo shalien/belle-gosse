@@ -27,4 +27,9 @@ class Path extends Model
     {
         return $this->belongsToMany(Topic::class);
     }
+
+    public function searches()
+    {
+        return $this->hasMany(Search::class);
+    }
 }

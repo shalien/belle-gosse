@@ -6,8 +6,7 @@ use App\Models\ProviderType;
 use App\Models\Supplier;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -23,22 +22,21 @@ return new class extends Migration
 
         $redditSuppliers = $suppliers->where('provider_type_id', $redditProviderType->id);
 
-        foreach($redditSuppliers as $redditSupplier) {
+        foreach ($redditSuppliers as $redditSupplier) {
 
             $redditPath = $redditSupplier->paths;
 
-            foreach($redditPath as $path) {
+            foreach ($redditPath as $path) {
 
                 $topics = $path->topics;
 
-                foreach($topics as $topic) {
+                foreach ($topics as $topic) {
 
                     $path = Path::firstOrCreate([
                         'content' => $topic->name,
                     ]);
 
-
-                    if($realbooruSupplier->paths()->where('id', $path->id)->exists()) {
+                    if ($realbooruSupplier->paths()->where('id', $path->id)->exists()) {
                         continue;
                     }
 
@@ -59,15 +57,15 @@ return new class extends Migration
 
         $booruSupplierWithoutRealbooru = $suppliers->where('provider_type_id', '!=', $redditProviderType->id);
 
-        foreach($booruSupplierWithoutRealbooru as $supplier) {
+        foreach ($booruSupplierWithoutRealbooru as $supplier) {
 
-            foreach($topicAlias as $alias) {
+            foreach ($topicAlias as $alias) {
 
                 $path = Path::firstOrCreate([
                     'content' => $alias->alias,
                 ]);
 
-                if($supplier->paths()->where('id', $path->id)->exists()) {
+                if ($supplier->paths()->where('id', $path->id)->exists()) {
                     continue;
                 }
 
@@ -82,9 +80,6 @@ return new class extends Migration
             }
 
         }
-
-
-
 
     }
 

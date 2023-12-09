@@ -25,14 +25,6 @@ class PathController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StorePathRequest $request)
@@ -57,6 +49,14 @@ class PathController extends Controller
         return new PathResource(Path::findOrfail($path->id));
 
 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**

@@ -10,10 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
-
-            $table->foreign('topic_id')->references('id')->on('topics');
+        Schema::create('searches', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -22,9 +21,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::table('path_topic', function (Blueprint $table) {
-            //
-            $table->dropForeign(['topic_id']);
-        });
+        Schema::dropIfExists('searches');
     }
 };
