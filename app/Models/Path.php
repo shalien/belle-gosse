@@ -13,21 +13,6 @@ class Path extends Model
         'content',
     ];
 
-    public function suppliers()
-    {
-        return $this->belongsToMany(Supplier::class);
-    }
-
-    public function sources()
-    {
-        return $this->belongsToMany(Source::class);
-    }
-
-    public function topics()
-    {
-        return $this->belongsToMany(Topic::class);
-    }
-
     public function searches()
     {
         return $this->hasMany(Search::class);

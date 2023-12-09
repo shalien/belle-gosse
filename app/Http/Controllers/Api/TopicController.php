@@ -8,6 +8,7 @@ use App\Http\Requests\Api\Topic\UpdateTopicRequest;
 use App\Http\Resources\_OLD\ProviderResource;
 use App\Http\Resources\_OLD\TopicAliasResource;
 use App\Http\Resources\PathResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\TopicResource;
 use App\Models\Topic;
 use Exception;
@@ -62,18 +63,6 @@ class TopicController extends Controller
         return new TopicResource($topic::with('topic_aliases', 'providers')->findOrFail($topic->id));
     }
 
-    public function showWithProviders(Topic $topic): AnonymousResourceCollection
-    {
-        //
-        return ProviderResource::collection(Topic::findOrFail($topic->id)->providers);
-    }
-
-    public function showWithAliases(Topic $topic): AnonymousResourceCollection
-    {
-        //
-        return TopicAliasResource::collection(Topic::findOrFail($topic->id)->topic_aliases);
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -108,9 +97,8 @@ class TopicController extends Controller
             : response()->json(['error' => 'Error deleting'], Response::HTTP_CONFLICT);
     }
 
-
-    public function showTopicPaths(Topic $topic): AnonymousResourceCollection
+    public function showTopicSearches(Topic $topic): AnonymousResourceCollection
     {
-        return PathResource::collection(Topic::findOrFail($topic->id)->paths);
+        return SearchResource::collection($topic->searches);
     }
 }

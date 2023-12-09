@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Path\StorePathRequest;
 use App\Http\Requests\Api\Path\UpdatePathRequest;
 use App\Http\Resources\PathResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\SourceResource;
 use App\Http\Resources\SupplierResource;
 use App\Http\Resources\TopicResource;
@@ -124,15 +125,9 @@ class PathController extends Controller
         return SourceResource::collection(Path::findOrFail($path->id)->sources);
     }
 
-    public function showPathTopics(Path $path)
+    public function showPathSearches(Path $path)
     {
         //
-        return TopicResource::collection(Path::findOrFail($path->id)->topics);
-    }
-
-    public function showPathSuppliers(Path $path)
-    {
-        //
-        return SupplierResource::collection(Path::findOrFail($path->id)->suppliers);
+        return SearchResource::collection(Path::findOrFail($path->id)->searches);
     }
 }

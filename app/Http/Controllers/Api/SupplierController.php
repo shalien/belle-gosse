@@ -46,12 +46,9 @@ class SupplierController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Supplier $supplier)
     {
-        //
-        //
-
-        $supplier = Supplier::findOrFail($id);
+        $supplier = Supplier::findOrFail($supplier->id);
 
         return new SupplierResource($supplier);
 
@@ -79,24 +76,21 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Supplier $supplier)
     {
         //
-
-        $supplier = Supplier::findOrFail($id);
-
         $supplier->delete();
 
         return response()->json(null, 204);
     }
 
-    public function showSupplierPaths(Supplier $supplier)
-    {
-        return PathResource::collection($supplier->paths);
-    }
-
     public function showSupplierProviderType(Supplier $supplier)
     {
         return new ProviderTypeResource($supplier->providerType);
+    }
+
+    public function showSupplierSearch(Supplier $supplier)
+    {
+        return new SearchResource($supplier->search);
     }
 }

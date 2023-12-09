@@ -7,8 +7,10 @@ use App\Http\Requests\Api\Source\StoreSourceRequest;
 use App\Http\Requests\Api\Source\UpdateSourceRequest;
 use App\Http\Resources\MediaResource;
 use App\Http\Resources\PathResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Destination;
+use App\Models\Search;
 use App\Models\Source;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,7 +27,6 @@ class SourceController extends Controller
     {
         return SourceResource::collection(Source::all());
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -58,7 +59,7 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return SourceResource
      */
     public function show(Source $source)
@@ -104,7 +105,6 @@ class SourceController extends Controller
             response()->json(['message' => 'Source not deleted'], Response::HTTP_CONFLICT);
     }
 
-
     public function showByLink(Request $request): SourceResource
     {
         $url = base64_decode($request['url']);
@@ -121,7 +121,7 @@ class SourceController extends Controller
     {
         $filename = $request['filename'];
 
-        $destination = Destination::where('filename', 'LIKE', '%' . $filename . '%')->firstOrFail();
+        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
 
         $media = $destination->medias->first();
 
@@ -130,9 +130,8 @@ class SourceController extends Controller
         return new SourceResource($source);
     }
 
-    public function showSourceQuery(Source $source)
+    public function showSourceSearch(Source $source)
     {
-
-        return new PathResource($source->queryy());
+        return new SearchResource($source->search);
     }
 }
