@@ -36,7 +36,7 @@ class CreateUser extends Command
             'device_name' => $this->argument('device_name'),
         ];
 
-        $action = new CreateNewUser();
+        $action = new CreateNewUser;
 
         $user = $action->create($input);
 

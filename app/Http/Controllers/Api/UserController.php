@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\StoreUserRequest;
+use App\Http\Requests\Api\User\UserTokenRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -124,5 +126,23 @@ class UserController extends Controller
         DB::commit();
 
         return response()->json(['success' => 'User deleted successfully'], Response::HTTP_OK);
+    }
+
+    public function createToken(UserTokenRequest $request)
+    {
+        $credentials = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        if (Auth::attempt($credentials)) {
+            $user = $request->user();
+            $token = $user->createToken($request->device_name)->plainTextToken;
+
+
+            return response()->json(['token' => $token], Response::HTTP_OK);
+        } else {
+            return response()->json(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
     }
 }

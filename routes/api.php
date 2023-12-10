@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +23,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::withoutMiddleware(['auth:sanctum', 'fortify:web', 'auth:web'])->group(function () {
+    Route::controller(UserController::class)->prefix('users')->group(function () {
+        Route::post('/token', 'createToken');
+    });
+});
 Route::middleware('auth:sanctum')
     ->withoutMiddleware('throttle:api')
     ->group(function () {
@@ -72,7 +79,6 @@ Route::middleware('auth:sanctum')
         Route::controller(PathController::class)->prefix('paths')->group(function () {
             Route::get('/{path}/searches', 'showPathSearches');
         });
-
 
         Route::controller(SourceController::class)->prefix('sources')->group(
             function () {
