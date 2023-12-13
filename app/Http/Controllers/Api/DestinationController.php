@@ -22,7 +22,7 @@ class DestinationController extends Controller
     public function index(): AnonymousResourceCollection
     {
         //
-        return DestinationResource::collection(Destination::all());
+        return DestinationResource::collection(Destination::paginate());
     }
 
     /**

@@ -93,6 +93,6 @@ class MediaController extends Controller
 
     public function showBySource(Source $source)
     {
-        return MediaResource::collection(Media::where('source_id', '=', $source->id)->get());
+        return MediaResource::collection($source->medias);
     }
 }
