@@ -23,7 +23,7 @@ class UpdatePathRequest extends FormRequest
     {
         return [
             //
-            'path' => 'required|string',
+            'content' => 'required|string',
         ];
     }
 }
