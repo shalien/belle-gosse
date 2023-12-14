@@ -21,11 +21,11 @@ class StoreSourceRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             //
-            'path_id' => 'required|exists:\App\Models\Path,id',
+            'search_id' => 'required|integer|exists:searches,id',
             'link' => 'required|string',
         ];
     }

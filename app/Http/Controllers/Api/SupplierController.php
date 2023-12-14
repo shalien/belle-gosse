@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Api\Supplier\UpdateSupplierRequest;
-use App\Http\Resources\PathResource;
 use App\Http\Resources\ProviderTypeResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;

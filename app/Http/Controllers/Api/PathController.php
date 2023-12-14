@@ -8,8 +8,6 @@ use App\Http\Requests\Api\Path\UpdatePathRequest;
 use App\Http\Resources\PathResource;
 use App\Http\Resources\SearchResource;
 use App\Http\Resources\SourceResource;
-use App\Http\Resources\SupplierResource;
-use App\Http\Resources\TopicResource;
 use App\Models\Path;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;

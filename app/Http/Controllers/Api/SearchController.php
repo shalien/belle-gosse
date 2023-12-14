@@ -22,14 +22,6 @@ class SearchController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreSearchRequest $request)
@@ -40,6 +32,14 @@ class SearchController extends Controller
         $search = Search::create($validated);
 
         return new SearchResource($search);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**

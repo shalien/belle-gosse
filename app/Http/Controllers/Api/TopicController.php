@@ -7,7 +7,6 @@ use App\Http\Requests\Api\Topic\StoreTopicRequest;
 use App\Http\Requests\Api\Topic\UpdateTopicRequest;
 use App\Http\Resources\_OLD\ProviderResource;
 use App\Http\Resources\_OLD\TopicAliasResource;
-use App\Http\Resources\PathResource;
 use App\Http\Resources\SearchResource;
 use App\Http\Resources\TopicResource;
 use App\Models\Topic;
