@@ -9,6 +9,7 @@ use App\Http\Resources\PathResource;
 use App\Http\Resources\SearchResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Path;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +27,7 @@ class PathController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePathRequest $request)
+    public function store(StorePathRequest $request): PathResource|JsonResponse
     {
         //
 
@@ -40,6 +41,8 @@ class PathController extends Controller
             $path->save();
         } catch (\Exception $e) {
             DB::rollBack();
+
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
 
         }
 
