@@ -110,13 +110,15 @@ class PathController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): JsonResponse
     {
         //
 
         $path = Path::findOrFail($id);
 
         $path->delete();
+
+        return response()->json(['message' => 'Path deleted successfully'], Response::HTTP_OK);
     }
 
     public function showPathSources(Path $path)
