@@ -71,7 +71,7 @@ class DestinationController extends Controller
         try {
             DB::beginTransaction();
 
-            $destination = $destination->update($request->validated());
+            $destination->update($request->validated());
 
             $destination->save();
         } catch (\Exception $e) {

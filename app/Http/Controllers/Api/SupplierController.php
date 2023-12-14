@@ -68,6 +68,7 @@ class SupplierController extends Controller
     {
         //
         $supplier->update($request->validated());
+        $supplier->save();
 
         return new SupplierResource($supplier);
     }

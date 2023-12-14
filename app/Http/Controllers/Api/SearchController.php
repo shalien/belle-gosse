@@ -68,6 +68,7 @@ class SearchController extends Controller
         $validated = $request->validated();
 
         $search->update($validated);
+        $search->save();
 
         return new SearchResource($search);
     }

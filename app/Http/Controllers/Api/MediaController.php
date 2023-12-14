@@ -61,7 +61,7 @@ class MediaController extends Controller
         try {
             DB::beginTransaction();
 
-            $media = $media->update($request->validated());
+            $media->update($request->validated());
 
             $media->source()->associate($request->validated()['source_id']);
             $media->destination()->associate($request->validated()['destination_id']);
