@@ -25,7 +25,7 @@ class StoreProviderTypeRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|unique',
+            'name' => 'required|unique:topics',
         ];
     }
 }
