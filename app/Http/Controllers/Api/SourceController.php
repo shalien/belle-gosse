@@ -40,7 +40,7 @@ class SourceController extends Controller
             DB::beginTransaction();
             $source = Source::create($request->validated());
 
-            $source->path()->associate($request->validated()['path_id']);
+            $source->search()->associate($request->validated()['search_id']);
 
             $source->save();
         } catch (\Exception $e) {
@@ -57,7 +57,7 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return SourceResource
      */
     public function show(Source $source)
@@ -119,7 +119,7 @@ class SourceController extends Controller
     {
         $filename = $request['filename'];
 
-        $destination = Destination::where('filename', 'LIKE', '%' . $filename . '%')->firstOrFail();
+        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
 
         $media = $destination->medias->first();
 
