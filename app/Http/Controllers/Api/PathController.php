@@ -118,7 +118,7 @@ class PathController extends Controller
 
         $path->delete();
 
-        return response()->json(['message' => 'Path deleted successfully'], Response::HTTP_OK);
+        return response()->json(['message' => 'Path deleted successfully'], Respponse::HTTP_NO_CONTENT);
     }
 
     public function showPathSources(Path $path)
