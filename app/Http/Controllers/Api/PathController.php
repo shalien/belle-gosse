@@ -45,8 +45,7 @@ class PathController extends Controller
 
         DB::commit();
 
-        return new PathResource(Path::findOrfail($path->id));
-
+        return new PathResource($path);
 
     }
 
