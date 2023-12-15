@@ -23,7 +23,7 @@ class UpdateDestinationRequest extends FormRequest
     {
         return [
             //
-            'filename' => 'required|string',
+            'filename' => 'required|string|unique:destinations',
         ];
     }
 }

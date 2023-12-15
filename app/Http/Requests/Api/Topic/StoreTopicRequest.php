@@ -23,7 +23,7 @@ class StoreTopicRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|string',
+            'name' => 'required|string|unique:topics',
             'order' => 'required|numeric',
         ];
     }

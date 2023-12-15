@@ -23,6 +23,9 @@ class UpdateSearchRequest extends FormRequest
     {
         return [
             //
+            'topic_id' => 'required|exists:topics,id',
+            'path_id' => 'required|exists:paths,id',
+            'supplier_id' => 'required|exists:suppliers,id',
         ];
     }
 }

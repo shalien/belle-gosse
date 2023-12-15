@@ -25,7 +25,7 @@ class UpdateProviderTypeRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|unique:topics',
+            'name' => 'required|unique:provider_types',
         ];
     }
 }

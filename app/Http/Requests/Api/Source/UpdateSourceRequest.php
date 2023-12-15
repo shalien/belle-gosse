@@ -25,8 +25,8 @@ class UpdateSourceRequest extends FormRequest
     {
         return [
             //
-            'path_id' => 'required|exists:\App\Models\Path,id',
-            'link' => 'required|string',
+            'search_id' => 'required|integer|exists:searches,id',
+            'link' => 'required|string|unique:sources',
         ];
     }
 }

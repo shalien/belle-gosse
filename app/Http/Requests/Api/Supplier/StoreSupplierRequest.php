@@ -23,6 +23,7 @@ class StoreSupplierRequest extends FormRequest
     {
         return [
             //
+            'host' => 'required|string|unique:suppliers',
         ];
     }
 }

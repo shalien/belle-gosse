@@ -26,7 +26,7 @@ class StoreSourceRequest extends FormRequest
         return [
             //
             'search_id' => 'required|integer|exists:searches,id',
-            'link' => 'required|string',
+            'link' => 'required|string|unique:sources',
         ];
     }
 }
