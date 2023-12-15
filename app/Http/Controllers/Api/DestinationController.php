@@ -82,7 +82,7 @@ class DestinationController extends Controller
 
         DB::commit();
 
-        return new DestinationResource(Destination::findOrFail($destination->id));
+        return new DestinationResource($destination);
     }
 
     /**

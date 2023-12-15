@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Api\Supplier\UpdateSupplierRequest;
 use App\Http\Resources\ProviderTypeResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 
@@ -28,38 +29,22 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request)
     {
         //
-
         $supplier = Supplier::create($request->validated());
 
         return new SupplierResource($supplier);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
      */
     public function show(Supplier $supplier)
     {
-        $supplier = Supplier::findOrFail($supplier->id);
 
         return new SupplierResource($supplier);
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.

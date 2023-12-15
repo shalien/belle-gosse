@@ -48,7 +48,7 @@ class ProviderTypeController extends Controller
 
         DB::commit();
 
-        return new ProviderTypeResource(ProviderType::findOrfail($provider_type->id));
+        return new ProviderTypeResource($provider_type);
     }
 
     /**
@@ -56,7 +56,7 @@ class ProviderTypeController extends Controller
      */
     public function show(ProviderType $provider_type): ProviderTypeResource
     {
-        return new ProviderTypeResource(ProviderType::findOrFail($provider_type->id));
+        return new ProviderTypeResource($provider_type);
     }
 
     /**
@@ -78,7 +78,7 @@ class ProviderTypeController extends Controller
 
         DB::commit();
 
-        return new ProviderTypeResource(ProviderType::findOrfail($provider_type->id));
+        return new ProviderTypeResource($provider_type);
     }
 
     /**
@@ -98,6 +98,6 @@ class ProviderTypeController extends Controller
 
     public function showProviderTypeSuppliers(ProviderType $provider_type): AnonymousResourceCollection
     {
-        return SupplierResource::collection(ProviderType::findOrFail($provider_type->id)->suppliers);
+        return SupplierResource::collection($provider_type->suppliers);
     }
 }

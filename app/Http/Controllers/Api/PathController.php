@@ -53,34 +53,13 @@ class PathController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Path $path)
     {
-        //
-
-        $path = Path::findOrFail($id);
-
         return new PathResource($path);
-
-
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -91,7 +70,6 @@ class PathController extends Controller
 
         try {
             DB::beginTransaction();
-            $path = Path::findOrFail($path->id);
             $path->update($request->validated());
             $path->save();
         } catch (\Exception $e) {
@@ -102,7 +80,7 @@ class PathController extends Controller
 
         DB::commit();
 
-        return new PathResource(Path::findOrFail($path->id));
+        return new PathResource($path);
 
 
     }
@@ -124,12 +102,12 @@ class PathController extends Controller
     public function showPathSources(Path $path)
     {
         //
-        return SourceResource::collection(Path::findOrFail($path->id)->sources);
+        return SourceResource::collection($path->sources);
     }
 
     public function showPathSearches(Path $path)
     {
         //
-        return SearchResource::collection(Path::findOrFail($path->id)->searches);
+        return SearchResource::collection($path->searches);
     }
 }

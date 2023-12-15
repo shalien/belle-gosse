@@ -52,13 +52,7 @@ class UserController extends Controller
         return new UserResource($user);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
@@ -66,21 +60,13 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
-        return new UserResource(User::findOrFail($user->id));
+        return new UserResource($user);
     }
 
     public function findUserBySnowflake(string $snowflake)
     {
         //
         return new UserResource(User::where('snowflake', $snowflake)->firstOrFail());
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**

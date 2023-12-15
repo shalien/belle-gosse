@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')
     ->withoutMiddleware('throttle:api')
     ->group(function () {
 
-        Route::resources([
+        Route::apiResources([
             'topics' => TopicController::class,
             'medias' => MediaController::class,
             'provider_types' => ProviderTypeController::class,

@@ -63,7 +63,7 @@ class SourceController extends Controller
     public function show(Source $source)
     {
         //
-        return new SourceResource(Source::findOrFail($source->id));
+        return new SourceResource($source);
     }
 
     /**
@@ -87,7 +87,7 @@ class SourceController extends Controller
 
         DB::commit();
 
-        return new SourceResource(Source::findOrFail($source->id));
+        return new SourceResource($source);
     }
 
     /**

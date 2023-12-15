@@ -25,7 +25,7 @@ class MediaController extends Controller
 
     public function show(Media $media): MediaResource
     {
-        return new MediaResource(Media::findOrFail($media->id));
+        return new MediaResource($media);
     }
 
     public function store(StoreMediaRequest $request)
