@@ -30,6 +30,10 @@ class SearchController extends Controller
         $validated = $request->validated();
 
         $search = Search::create($validated);
+        $search->path()->associate($request->path_id);
+        $search->topic()->associate($request->topic_id);
+        $search->supplier()->associate($request->supplier_id);
+        $search->save();
 
         return new SearchResource($search);
     }
@@ -52,6 +56,9 @@ class SearchController extends Controller
         $validated = $request->validated();
 
         $search->update($validated);
+        $search->path()->associate($request->path_id);
+        $search->topic()->associate($request->topic_id);
+        $search->supplier()->associate($request->supplier_id);
         $search->save();
 
         return new SearchResource($search);

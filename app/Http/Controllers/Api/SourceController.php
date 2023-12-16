@@ -76,8 +76,8 @@ class SourceController extends Controller
         //
         try {
             DB::beginTransaction();
-            $source = Source::findOrFail($source->id);
             $source->update($request->validated());
+            $source->search()->associate($request->validated()['search_id']);
             $source->save();
         } catch (\Exception $e) {
             DB::rollBack();

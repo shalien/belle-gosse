@@ -30,10 +30,11 @@ class SupplierController extends Controller
     {
         //
         $supplier = Supplier::create($request->validated());
+        $supplier->provider_type()->associate($request->provider_type_id);
+        $supplier->save();
 
         return new SupplierResource($supplier);
     }
-
 
     /**
      * Display the specified resource.
@@ -45,7 +46,6 @@ class SupplierController extends Controller
 
     }
 
-
     /**
      * Update the specified resource in storage.
      */
@@ -53,6 +53,7 @@ class SupplierController extends Controller
     {
         //
         $supplier->update($request->validated());
+        $supplier->provider_type()->associate($request->provider_type_id);
         $supplier->save();
 
         return new SupplierResource($supplier);
