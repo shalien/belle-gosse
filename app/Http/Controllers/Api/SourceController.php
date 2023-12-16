@@ -99,7 +99,7 @@ class SourceController extends Controller
     {
         //
         return $source->delete() ?
-            response()->json(['message' => 'Source deleted successfully'], Response::HTTP_OK) :
+            response()->json(['message' => 'Source deleted successfully'], Response::HTTP_NO_CONTENT) :
             response()->json(['message' => 'Source not deleted'], Response::HTTP_CONFLICT);
     }
 
