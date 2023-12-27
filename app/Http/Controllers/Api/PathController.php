@@ -24,13 +24,6 @@ class PathController extends Controller
         return PathResource::collection(Path::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -74,14 +67,6 @@ class PathController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
     public function update(UpdatePathRequest $request, Path $path)
@@ -109,10 +94,8 @@ class PathController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
-
         $path = Path::findOrFail($id);
 
         $path->delete();
@@ -134,5 +117,10 @@ class PathController extends Controller
     {
         //
         return SupplierResource::collection(Path::findOrFail($path->id)->suppliers);
+    }
+
+    public function showByContent(string $content)
+    {
+        return new PathResource(Path::where('content', $content)->firstOrFail());
     }
 }
