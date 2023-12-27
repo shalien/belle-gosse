@@ -60,11 +60,19 @@ Route::middleware('auth:sanctum')
             Route::get('/{topic}/searches', 'showTopicSearches');
         });
 
+
         Route::controller(SearchController::class)->prefix('searches')->group(function () {
             Route::get('/{search}/sources', 'showSearchSources');
             Route::get('/{search}/topic', 'showSearchTopic');
             Route::get('/{search}/supplier', 'showSearchSupplier');
             Route::get('/{search}/path', 'showSearchPath');
+
+        Route::controller(PathController::class)->prefix('paths')->group(function () {
+            Route::get('/{path}/sources', 'showPathSources');
+            Route::get('/{path}/topics', 'showPathTopics');
+            Route::get('/{path}/suppliers', 'showPathSuppliers');
+            Route::get('/content/{content}', 'showByContent');
+
         });
 
         Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {

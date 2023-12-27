@@ -23,7 +23,7 @@ class PathController extends Controller
         //
         return PathResource::collection(Path::all());
     }
-
+  
     /**
      * Store a newly created resource in storage.
      */
@@ -89,9 +89,8 @@ class PathController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id): JsonResponse
-    {
-        //
 
+    {
         $path = Path::findOrFail($id);
 
         $path->delete();
@@ -109,5 +108,10 @@ class PathController extends Controller
     {
         //
         return SearchResource::collection($path->searches);
+    }
+
+    public function showByContent(string $content)
+    {
+        return new PathResource(Path::where('content', $content)->firstOrFail());
     }
 }
