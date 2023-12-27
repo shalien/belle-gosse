@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Source\StoreSourceRequest;
 use App\Http\Requests\Api\Source\UpdateSourceRequest;
 use App\Http\Resources\MediaResource;
-use App\Http\Resources\PathResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\SourceResource;
 use App\Models\Destination;
 use App\Models\Source;
@@ -26,7 +26,6 @@ class SourceController extends Controller
         return SourceResource::collection(Source::all());
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -41,7 +40,7 @@ class SourceController extends Controller
             DB::beginTransaction();
             $source = Source::create($request->validated());
 
-            $source->path()->associate($request->validated()['path_id']);
+            $source->search()->associate($request->validated()['search_id']);
 
             $source->save();
         } catch (\Exception $e) {
@@ -58,13 +57,13 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return SourceResource
      */
     public function show(Source $source)
     {
         //
-        return new SourceResource(Source::findOrFail($source->id));
+        return new SourceResource($source);
     }
 
     /**
@@ -77,8 +76,8 @@ class SourceController extends Controller
         //
         try {
             DB::beginTransaction();
-            $source = Source::findOrFail($source->id);
             $source->update($request->validated());
+            $source->search()->associate($request->validated()['search_id']);
             $source->save();
         } catch (\Exception $e) {
             DB::rollBack();
@@ -88,7 +87,7 @@ class SourceController extends Controller
 
         DB::commit();
 
-        return new SourceResource(Source::findOrFail($source->id));
+        return new SourceResource($source);
     }
 
     /**
@@ -100,10 +99,9 @@ class SourceController extends Controller
     {
         //
         return $source->delete() ?
-            response()->json(['message' => 'Source deleted successfully'], Response::HTTP_OK) :
+            response()->json(['message' => 'Source deleted successfully'], Response::HTTP_NO_CONTENT) :
             response()->json(['message' => 'Source not deleted'], Response::HTTP_CONFLICT);
     }
-
 
     public function showByLink(Request $request): SourceResource
     {
@@ -121,7 +119,7 @@ class SourceController extends Controller
     {
         $filename = $request['filename'];
 
-        $destination = Destination::where('filename', 'LIKE', '%' . $filename . '%')->firstOrFail();
+        $destination = Destination::where('filename', 'LIKE', '%'.$filename.'%')->firstOrFail();
 
         $media = $destination->medias->first();
 
@@ -130,9 +128,8 @@ class SourceController extends Controller
         return new SourceResource($source);
     }
 
-    public function showSourceQuery(Source $source)
+    public function showSourceSearch(Source $source)
     {
-
-        return new PathResource($source->queryy());
+        return new SearchResource($source->search);
     }
 }

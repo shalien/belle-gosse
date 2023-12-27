@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Supplier;
+namespace App\Http\Requests\Api\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSupplierRequest extends FormRequest
+class UserTokenRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,9 @@ class StoreSupplierRequest extends FormRequest
     {
         return [
             //
-            'host' => 'required|string|unique:suppliers',
+            'email' => 'required|email',
+            'password' => 'required|string',
+            'device_name' => 'required|string',
         ];
     }
 }

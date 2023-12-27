@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Topic extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -17,10 +19,5 @@ class Topic extends Model
     public function searches()
     {
         return $this->hasMany(Search::class);
-    }
-
-    public function paths()
-    {
-        return $this->belongsToMany(Path::class);
     }
 }

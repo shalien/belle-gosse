@@ -25,7 +25,7 @@ class MediaController extends Controller
 
     public function show(Media $media): MediaResource
     {
-        return new MediaResource(Media::findOrFail($media->id));
+        return new MediaResource($media);
     }
 
     public function store(StoreMediaRequest $request)
@@ -61,7 +61,7 @@ class MediaController extends Controller
         try {
             DB::beginTransaction();
 
-            $media = $media->update($request->validated());
+            $media->update($request->validated());
 
             $media->source()->associate($request->validated()['source_id']);
             $media->destination()->associate($request->validated()['destination_id']);
@@ -93,6 +93,6 @@ class MediaController extends Controller
 
     public function showBySource(Source $source)
     {
-        return MediaResource::collection(Media::where('source_id', '=', $source->id)->get());
+        return MediaResource::collection($source->medias);
     }
 }

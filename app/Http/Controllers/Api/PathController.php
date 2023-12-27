@@ -6,10 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Path\StorePathRequest;
 use App\Http\Requests\Api\Path\UpdatePathRequest;
 use App\Http\Resources\PathResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\SourceResource;
-use App\Http\Resources\SupplierResource;
-use App\Http\Resources\TopicResource;
 use App\Models\Path;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +27,7 @@ class PathController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePathRequest $request)
+    public function store(StorePathRequest $request): PathResource|JsonResponse
     {
         //
 
@@ -42,36 +42,24 @@ class PathController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
+            return response()->json(['error' => $e->getMessage()], Response::HTTP_CONFLICT);
+
         }
 
         DB::commit();
 
-        return new PathResource(Path::findOrfail($path->id));
+        return new PathResource($path);
 
-
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Path $path)
     {
-        //
-
-        $path = Path::findOrFail($id);
-
         return new PathResource($path);
-
-
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -82,7 +70,6 @@ class PathController extends Controller
 
         try {
             DB::beginTransaction();
-            $path = Path::findOrFail($path->id);
             $path->update($request->validated());
             $path->save();
         } catch (\Exception $e) {
@@ -93,7 +80,7 @@ class PathController extends Controller
 
         DB::commit();
 
-        return new PathResource(Path::findOrFail($path->id));
+        return new PathResource($path);
 
 
     }
@@ -101,29 +88,26 @@ class PathController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(string $id): JsonResponse
+
     {
         $path = Path::findOrFail($id);
 
         $path->delete();
+
+        return response()->json(['message' => 'Path deleted successfully'], Response::HTTP_NO_CONTENT);
     }
 
     public function showPathSources(Path $path)
     {
         //
-        return SourceResource::collection(Path::findOrFail($path->id)->sources);
+        return SourceResource::collection($path->sources);
     }
 
-    public function showPathTopics(Path $path)
+    public function showPathSearches(Path $path)
     {
         //
-        return TopicResource::collection(Path::findOrFail($path->id)->topics);
-    }
-
-    public function showPathSuppliers(Path $path)
-    {
-        //
-        return SupplierResource::collection(Path::findOrFail($path->id)->suppliers);
+        return SearchResource::collection($path->searches);
     }
 
     public function showByContent(string $content)

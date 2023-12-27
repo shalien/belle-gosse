@@ -22,7 +22,7 @@ class DestinationController extends Controller
     public function index(): AnonymousResourceCollection
     {
         //
-        return DestinationResource::collection(Destination::with('medias')->get());
+        return DestinationResource::collection(Destination::paginate());
     }
 
     /**
@@ -71,7 +71,7 @@ class DestinationController extends Controller
         try {
             DB::beginTransaction();
 
-            $destination = $destination->update($request->validated());
+            $destination->update($request->validated());
 
             $destination->save();
         } catch (\Exception $e) {
@@ -82,7 +82,7 @@ class DestinationController extends Controller
 
         DB::commit();
 
-        return new DestinationResource(Destination::findOrFail($destination->id));
+        return new DestinationResource($destination);
     }
 
     /**

@@ -203,36 +203,6 @@ CREATE TABLE `password_resets`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `path_supplier`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `path_supplier`
-(
-    `supplier_id` bigint(20) unsigned NOT NULL,
-    `path_id`     bigint(20) unsigned NOT NULL,
-    PRIMARY KEY (`supplier_id`, `path_id`),
-    KEY `path_supplier_path_id_foreign` (`path_id`),
-    CONSTRAINT `path_supplier_path_id_foreign` FOREIGN KEY (`path_id`) REFERENCES `paths` (`id`) ON DELETE CASCADE,
-    CONSTRAINT `path_supplier_supplier_id_foreign` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`) ON DELETE CASCADE
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `path_topic`;
-/*!40101 SET @saved_cs_client = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `path_topic`
-(
-    `path_id`  bigint(20) unsigned NOT NULL,
-    `topic_id` bigint(20) unsigned NOT NULL,
-    KEY `path_topic_path_id_foreign` (`path_id`),
-    KEY `path_topic_topic_id_foreign` (`topic_id`),
-    CONSTRAINT `path_topic_path_id_foreign` FOREIGN KEY (`path_id`) REFERENCES `paths` (`id`),
-    CONSTRAINT `path_topic_topic_id_foreign` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `paths`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -318,20 +288,47 @@ CREATE TABLE `roles`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `searches`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `searches`
+(
+    `id`          bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `created_at`  timestamp           NULL DEFAULT NULL,
+    `updated_at`  timestamp           NULL DEFAULT NULL,
+    `topic_id`    bigint(20) unsigned NOT NULL,
+    `path_id`     bigint(20) unsigned NOT NULL,
+    `supplier_id` bigint(20) unsigned NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `searches_topic_id_path_id_supplier_id_unique` (`topic_id`, `path_id`, `supplier_id`),
+    KEY `searches_path_id_foreign` (`path_id`),
+    KEY `searches_supplier_id_foreign` (`supplier_id`),
+    KEY `searches_topic_id_path_id_supplier_id_index` (`topic_id`, `path_id`, `supplier_id`),
+    CONSTRAINT `searches_path_id_foreign` FOREIGN KEY (`path_id`) REFERENCES `paths` (`id`),
+    CONSTRAINT `searches_supplier_id_foreign` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`id`),
+    CONSTRAINT `searches_topic_id_foreign` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `sources`;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sources`
 (
-    `id`         bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-    `link`       longtext            NOT NULL,
-    `created_at` timestamp           NULL DEFAULT NULL,
-    `updated_at` timestamp           NULL DEFAULT NULL,
-    `path_id`    bigint(20) unsigned      DEFAULT NULL,
+    `id`          bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `link`        longtext            NOT NULL,
+    `created_at`  timestamp           NULL DEFAULT NULL,
+    `updated_at`  timestamp           NULL DEFAULT NULL,
+    `path_id`     bigint(20) unsigned      DEFAULT NULL,
+    `topic_id`    bigint(20) unsigned      DEFAULT NULL,
+    `supplier_id` bigint(20) unsigned      DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `sources_link_unique` (`link`) USING HASH,
     KEY `sources_path_id_foreign` (`path_id`),
-    CONSTRAINT `sources_path_id_foreign` FOREIGN KEY (`path_id`) REFERENCES `paths` (`id`)
+    KEY `sources_topic_id_path_id_supplier_id_foreign` (`topic_id`, `path_id`, `supplier_id`),
+    CONSTRAINT `sources_path_id_foreign` FOREIGN KEY (`path_id`) REFERENCES `paths` (`id`),
+    CONSTRAINT `sources_topic_id_path_id_supplier_id_foreign` FOREIGN KEY (`topic_id`, `path_id`, `supplier_id`) REFERENCES `searches` (`topic_id`, `path_id`, `supplier_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -351,6 +348,53 @@ CREATE TABLE `suppliers`
     KEY `suppliers_host_index` (`host`),
     KEY `suppliers_provider_type_id_foreign` (`provider_type_id`),
     CONSTRAINT `suppliers_provider_type_id_foreign` FOREIGN KEY (`provider_type_id`) REFERENCES `provider_types` (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `telescope_entries`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telescope_entries`
+(
+    `sequence`                bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+    `uuid`                    char(36)            NOT NULL,
+    `batch_id`                char(36)            NOT NULL,
+    `family_hash`             varchar(255)                 DEFAULT NULL,
+    `should_display_on_index` tinyint(1)          NOT NULL DEFAULT 1,
+    `type`                    varchar(20)         NOT NULL,
+    `content`                 longtext            NOT NULL,
+    `created_at`              datetime                     DEFAULT NULL,
+    PRIMARY KEY (`sequence`),
+    UNIQUE KEY `telescope_entries_uuid_unique` (`uuid`),
+    KEY `telescope_entries_batch_id_index` (`batch_id`),
+    KEY `telescope_entries_family_hash_index` (`family_hash`),
+    KEY `telescope_entries_created_at_index` (`created_at`),
+    KEY `telescope_entries_type_should_display_on_index_index` (`type`, `should_display_on_index`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `telescope_entries_tags`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telescope_entries_tags`
+(
+    `entry_uuid` char(36)     NOT NULL,
+    `tag`        varchar(255) NOT NULL,
+    KEY `telescope_entries_tags_entry_uuid_tag_index` (`entry_uuid`, `tag`),
+    KEY `telescope_entries_tags_tag_index` (`tag`),
+    CONSTRAINT `telescope_entries_tags_entry_uuid_foreign` FOREIGN KEY (`entry_uuid`) REFERENCES `telescope_entries` (`uuid`) ON DELETE CASCADE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `telescope_monitoring`;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `telescope_monitoring`
+(
+    `tag` varchar(255) NOT NULL
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -553,3 +597,17 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`)
 VALUES (70, '2023_11_26_123305_v3_transform_booru_providers', 5);
 INSERT INTO `migrations` (`id`, `migration`, `batch`)
 VALUES (71, '2023_11_26_125525_v3_drop_topic_alias_table', 5);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (72, '2018_08_08_100000_create_telescope_entries_table', 6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (73, '2023_12_09_080651_create_searches_table', 6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (74, '2023_12_09_080918_alter_searches_table_add_foreign_keys', 6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (75, '2023_12_09_083616_alter_sources_table_add_foreign_key_to_searches', 6);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (76, '2023_12_09_085820_convert_schema_to_v3.5', 7);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (77, '2023_12_09_105439_drop_path_supplier_table', 8);
+INSERT INTO `migrations` (`id`, `migration`, `batch`)
+VALUES (78, '2023_12_09_105500_drop_path_topic_table', 8);

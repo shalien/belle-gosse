@@ -4,11 +4,13 @@ use App\Http\Controllers\Api\DestinationController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\PathController;
 use App\Http\Controllers\Api\ProviderTypeController;
+use App\Http\Controllers\Api\SearchController;
 use App\Http\Controllers\Api\SourceController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\TopicController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,11 +23,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::withoutMiddleware(['auth:sanctum', 'fortify:web', 'auth:web'])->group(function () {
+    Route::controller(UserController::class)->prefix('users')->group(function () {
+        Route::post('/token', 'createToken');
+    });
+});
 Route::middleware('auth:sanctum')
     ->withoutMiddleware('throttle:api')
     ->group(function () {
 
-        Route::resources([
+        Route::apiResources([
             'topics' => TopicController::class,
             'medias' => MediaController::class,
             'provider_types' => ProviderTypeController::class,
@@ -34,6 +42,7 @@ Route::middleware('auth:sanctum')
             'users' => UserController::class,
             'paths' => PathController::class,
             'suppliers' => SupplierController::class,
+            'searches' => SearchController::class,
         ]);
 
         Route::controller(DestinationController::class)->prefix('destinations')->group(function () {
@@ -48,18 +57,26 @@ Route::middleware('auth:sanctum')
         });
 
         Route::controller(TopicController::class)->prefix('topics')->group(function () {
-            Route::get('/{topic}/paths', 'showTopicPaths');
+            Route::get('/{topic}/searches', 'showTopicSearches');
         });
+
+
+        Route::controller(SearchController::class)->prefix('searches')->group(function () {
+            Route::get('/{search}/sources', 'showSearchSources');
+            Route::get('/{search}/topic', 'showSearchTopic');
+            Route::get('/{search}/supplier', 'showSearchSupplier');
+            Route::get('/{search}/path', 'showSearchPath');
 
         Route::controller(PathController::class)->prefix('paths')->group(function () {
             Route::get('/{path}/sources', 'showPathSources');
             Route::get('/{path}/topics', 'showPathTopics');
             Route::get('/{path}/suppliers', 'showPathSuppliers');
             Route::get('/content/{content}', 'showByContent');
+
         });
 
         Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
-            Route::get('/{supplier}/paths', 'showSupplierPaths');
+            Route::get('/{supplier}/searches', 'showSupplierSearches');
             Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
         });
 
@@ -67,13 +84,16 @@ Route::middleware('auth:sanctum')
             Route::get('/{provider_type}/suppliers', 'showProviderTypeSuppliers');
         });
 
+        Route::controller(PathController::class)->prefix('paths')->group(function () {
+            Route::get('/{path}/searches', 'showPathSearches');
+        });
 
         Route::controller(SourceController::class)->prefix('sources')->group(
             function () {
                 Route::get('/link/{url}', 'showByLink');
                 Route::get('/{source}/medias', 'showWithMedias');
                 Route::get('/destination/{filename}', 'showByFilename');
-                Route::get('/{source}/query', 'showSourceQuery');
+                Route::get('/{source}/search', 'showSourceSearch');
             }
         );
 

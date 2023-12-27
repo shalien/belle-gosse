@@ -23,9 +23,4 @@ class Supplier extends Model
     {
         return $this->hasMany(Search::class);
     }
-
-    public function paths()
-    {
-        return $this->belongsToMany(Path::class);
-    }
 }

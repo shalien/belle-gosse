@@ -12,14 +12,8 @@ return new class extends Migration {
     {
         Schema::table('sources', function (Blueprint $table) {
             //
-            //   $table->unsignedBigInteger('path_id')->nullable();
-            $table->unsignedBigInteger('topic_id')->nullable();
-            $table->unsignedBigInteger('supplier_id')->nullable();
-
-            $table->foreign(['topic_id', 'path_id', 'supplier_id'])
-                ->references(['topic_id', 'path_id', 'supplier_id'])
-                ->on('searches');
-
+            $table->unsignedBigInteger('search_id')->nullable();
+            $table->foreign('search_id')->references('id')->on('searches');
         });
     }
 
@@ -30,8 +24,8 @@ return new class extends Migration {
     {
         Schema::table('sources', function (Blueprint $table) {
             //
-            $table->dropForeign(['path_id', 'topic_id', 'supplier_id']);
-            $table->dropColumn(['path_id', 'topic_id', 'supplier_id']);
+            $table->dropForeign(['search_id']);
+            $table->dropColumn('search_id');
         });
     }
 };

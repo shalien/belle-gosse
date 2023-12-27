@@ -4,8 +4,7 @@ use App\Models\Search;
 use App\Models\Topic;
 use Illuminate\Database\Migrations\Migration;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\_OLD;
+namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProviderLinkResource extends JsonResource
+class SearchResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

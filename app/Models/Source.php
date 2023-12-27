@@ -16,8 +16,8 @@ class Source extends Model
         return $this->hasMany(Media::class);
     }
 
-    public function searches()
+    public function search()
     {
-        return $this->hasMany(Search::class);
+        return $this->belongsTo(Search::class);
     }
 }

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Supplier\StoreSupplierRequest;
 use App\Http\Requests\Api\Supplier\UpdateSupplierRequest;
-use App\Http\Resources\PathResource;
 use App\Http\Resources\ProviderTypeResource;
+use App\Http\Resources\SearchResource;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 
@@ -29,40 +29,21 @@ class SupplierController extends Controller
     public function store(StoreSupplierRequest $request)
     {
         //
-
         $supplier = Supplier::create($request->validated());
+        $supplier->provider_type()->associate($request->provider_type_id);
+        $supplier->save();
 
         return new SupplierResource($supplier);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Supplier $supplier)
     {
-        //
-        //
-
-        $supplier = Supplier::findOrFail($id);
 
         return new SupplierResource($supplier);
 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
@@ -72,6 +53,8 @@ class SupplierController extends Controller
     {
         //
         $supplier->update($request->validated());
+        $supplier->provider_type()->associate($request->provider_type_id);
+        $supplier->save();
 
         return new SupplierResource($supplier);
     }
@@ -79,24 +62,21 @@ class SupplierController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Supplier $supplier)
     {
         //
-
-        $supplier = Supplier::findOrFail($id);
-
         $supplier->delete();
 
         return response()->json(null, 204);
     }
 
-    public function showSupplierPaths(Supplier $supplier)
-    {
-        return PathResource::collection($supplier->paths);
-    }
-
     public function showSupplierProviderType(Supplier $supplier)
     {
         return new ProviderTypeResource($supplier->providerType);
+    }
+
+    public function showSupplierSearch(Supplier $supplier)
+    {
+        return new SearchResource($supplier->search);
     }
 }

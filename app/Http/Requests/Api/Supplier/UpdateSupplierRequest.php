@@ -11,7 +11,7 @@ class UpdateSupplierRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,6 +23,7 @@ class UpdateSupplierRequest extends FormRequest
     {
         return [
             //
+            'host' => 'required|string|unique:suppliers',
         ];
     }
 }

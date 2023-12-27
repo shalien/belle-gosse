@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\Supplier;
+namespace App\Http\Requests\Api\Search;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreSupplierRequest extends FormRequest
+class StoreSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,10 @@ class StoreSupplierRequest extends FormRequest
     {
         return [
             //
-            'host' => 'required|string|unique:suppliers',
+            'topic_id' => 'required|exists:topics,id',
+            'path_id' => 'required|exists:paths,id',
+            'supplier_id' => 'required|exists:suppliers,id',
+
         ];
     }
 }
