@@ -50,7 +50,7 @@ return new class extends Migration {
 
                 }
 
-                if($supplier->paths()->where('id', $path->id)->exists()) {
+                if ($supplier->paths()->where('id', $path->id)->exists()) {
                     continue;
                 }
 
@@ -80,7 +80,6 @@ return new class extends Migration {
 
         Schema::dropIfExists('providers');
         Schema::dropIfExists('provider_links');
-
 
 
         Schema::enableForeignKeyConstraints();

@@ -14,6 +14,11 @@ class Topic extends Model
         'order',
     ];
 
+    public function searches()
+    {
+        return $this->hasMany(Search::class);
+    }
+
     public function paths()
     {
         return $this->belongsToMany(Path::class);

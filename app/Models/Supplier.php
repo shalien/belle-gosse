@@ -14,13 +14,18 @@ class Supplier extends Model
         'provider_type_id',
     ];
 
-    public function paths()
-    {
-        return $this->belongsToMany(Path::class);
-    }
-
     public function provider_type()
     {
         return $this->belongsTo(ProviderType::class);
+    }
+
+    public function searches()
+    {
+        return $this->hasMany(Search::class);
+    }
+
+    public function paths()
+    {
+        return $this->belongsToMany(Path::class);
     }
 }

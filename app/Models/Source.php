@@ -11,14 +11,13 @@ class Source extends Model
 
     protected $fillable = ['link', 'path_id'];
 
-
-    public function path()
-    {
-        return $this->belongsTo(Path::class);
-    }
-
     public function medias()
     {
         return $this->hasMany(Media::class);
+    }
+
+    public function searches()
+    {
+        return $this->hasMany(Search::class);
     }
 }

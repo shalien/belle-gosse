@@ -4,16 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('path_topic', function (Blueprint $table) {
-            $table->unsignedBigInteger('path_id');
-            $table->unsignedBigInteger('topic_id');
-        });
+        //
+        Schema::dropIfExists('path_supplier');
     }
 
     /**
@@ -21,6 +20,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('path_topic');
+        //
     }
 };

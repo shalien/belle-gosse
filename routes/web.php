@@ -12,7 +12,7 @@ Route::any('/login', function () {
 });
 
 Route::get('/collections', function () {
-   return Redirect::away('https://collections.projetretro.io');
+    return Redirect::away('https://collections.projetretro.io');
 });
 
 Route::middleware('auth:sanctum')->group(function () {

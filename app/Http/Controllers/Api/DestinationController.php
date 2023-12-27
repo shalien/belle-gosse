@@ -102,7 +102,7 @@ class DestinationController extends Controller
         //
         $destination = Destination::where('filename', $filename)->firstOrFail();
 
-        if($destination) {
+        if ($destination) {
 
             $medias = $destination->medias;
             $source = $medias->first()->source;
@@ -112,7 +112,6 @@ class DestinationController extends Controller
         } else {
             return response()->json(['error' => 'Error finding destination'], ResponseAlias::HTTP_CONFLICT);
         }
-
 
 
     }
