@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')
             Route::get('/{path}/sources', 'showPathSources');
             Route::get('/{path}/topics', 'showPathTopics');
             Route::get('/{path}/suppliers', 'showPathSuppliers');
+            Route::get('/content/{content}', 'showByContent');
         });
 
         Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
