@@ -11,13 +11,11 @@ class ProviderType extends Model
 
     protected $fillable = ['name'];
 
-    public function provider_links()
+
+    public function suppliers()
     {
-        return $this->hasMany(ProviderLink::class);
+        return $this->hasMany(Supplier::class);
     }
 
-    public function ignored_hosts()
-    {
-        return $this->belongsToMany(IgnoredHost::class);
-    }
+
 }

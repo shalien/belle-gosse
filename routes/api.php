@@ -1,16 +1,12 @@
 <?php
 
 use App\Http\Controllers\Api\DestinationController;
-use App\Http\Controllers\Api\GuildController;
-use App\Http\Controllers\Api\IgnoredHostController;
 use App\Http\Controllers\Api\MediaController;
-use App\Http\Controllers\Api\ProviderController;
-use App\Http\Controllers\Api\ProviderLinkController;
+use App\Http\Controllers\Api\PathController;
 use App\Http\Controllers\Api\ProviderTypeController;
 use App\Http\Controllers\Api\SourceController;
-use App\Http\Controllers\Api\TopicAliasController;
+use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\TopicController;
-use App\Http\Controllers\Api\UnmanagedRedditHostController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,55 +25,56 @@ Route::middleware('auth:sanctum')
     ->withoutMiddleware('throttle:api')
     ->group(function () {
 
-    Route::resources([
-        'topics' => TopicController::class,
-        'providers' => ProviderController::class,
-        'provider_links' => ProviderLinkController::class,
-        'medias' => MediaController::class,
-        'unmanaged_hosts' => UnmanagedRedditHostController::class,
-        'ignored_hosts' => IgnoredHostController::class,
-        'provider_types' => ProviderTypeController::class,
-        'sources' => SourceController::class,
-        'destinations' => DestinationController::class,
-        'topic_aliases' => TopicAliasController::class,
-        'users' => UserController::class,
-        'guilds' => GuildController::class,
-    ]);
+        Route::resources([
+            'topics' => TopicController::class,
+            'medias' => MediaController::class,
+            'provider_types' => ProviderTypeController::class,
+            'sources' => SourceController::class,
+            'destinations' => DestinationController::class,
+            'users' => UserController::class,
+            'paths' => PathController::class,
+            'suppliers' => SupplierController::class,
+        ]);
 
-    Route::controller(TopicController::class)->prefix('topics')->group(function () {
-        Route::get('/{topic}/providers', 'showWithProviders');
-        Route::get('/{topic}/alias', 'showWithAliases');
-    });
+        Route::controller(DestinationController::class)->prefix('destinations')->group(function () {
+            Route::get('/filename/{filename}', 'showByFilename');
+        });
 
-    Route::controller(ProviderController::class)->prefix('providers')->group(function () {
-        Route::get('/{provider}/topic', 'showWithTopic');
-        Route::get('/{provider}/links', 'showWithLinks');
-        Route::get('{provider}/sources', 'showWithSources');
-    });
-
-    Route::controller(MediaController::class)->prefix('medias')->group(function () {
-        Route::get('/link/{url}', 'showByLink');
-        Route::get('/destination/{destination}', 'showByDestination');
-        Route::get('/source/{source}', 'showBySource');
-
-    });
-
-    Route::controller(SourceController::class)->prefix('sources')->group(
-        function () {
+        Route::controller(MediaController::class)->prefix('medias')->group(function () {
             Route::get('/link/{url}', 'showByLink');
-            Route::get('/{source}/medias', 'showWithMedias');
-            Route::get('/destination/{filename}', 'showByFilename');
-        }
-    );
+            Route::get('/destination/{destination}', 'showByDestination');
+            Route::get('/source/{source}', 'showBySource');
 
-    Route::controller(ProviderLinkController::class)->prefix('provider_links')->group(
-        function () {
-            Route::get('/link/{url}', 'showByLink');
-            Route::get('/{provider_link}/providers', 'showWithProviders');
-        }
-    );
+        });
 
-    Route::controller(UserController::class)->prefix('users')->group(function(){
-        Route::get('/snowflake/{snowflake}', 'findUserBySnowflake');
+        Route::controller(TopicController::class)->prefix('topics')->group(function () {
+            Route::get('/{topic}/paths', 'showTopicPaths');
+        });
+
+        Route::controller(PathController::class)->prefix('paths')->group(function () {
+            Route::get('/{path}/sources', 'showPathSources');
+            Route::get('/{path}/topics', 'showPathTopics');
+            Route::get('/{path}/suppliers', 'showPathSuppliers');
+            Route::get('/content/{content}', 'showByContent');
+        });
+
+        Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
+            Route::get('/{supplier}/paths', 'showSupplierPaths');
+            Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
+        });
+
+        Route::controller(ProviderTypeController::class)->prefix('provider_types')->group(function () {
+            Route::get('/{provider_type}/suppliers', 'showProviderTypeSuppliers');
+        });
+
+
+        Route::controller(SourceController::class)->prefix('sources')->group(
+            function () {
+                Route::get('/link/{url}', 'showByLink');
+                Route::get('/{source}/medias', 'showWithMedias');
+                Route::get('/destination/{filename}', 'showByFilename');
+                Route::get('/{source}/query', 'showSourceQuery');
+            }
+        );
+
     });
-});

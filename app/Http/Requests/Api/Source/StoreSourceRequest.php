@@ -25,7 +25,7 @@ class StoreSourceRequest extends FormRequest
     {
         return [
             //
-            'provider_id' => 'required|exists:\App\Models\Provider,id',
+            'path_id' => 'required|exists:\App\Models\Path,id',
             'link' => 'required|string',
         ];
     }

@@ -9,11 +9,12 @@ class Source extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['link', 'provider_id'];
+    protected $fillable = ['link', 'path_id'];
 
-    public function provider()
+
+    public function path()
     {
-        return $this->belongsTo(Provider::class);
+        return $this->belongsTo(Path::class);
     }
 
     public function medias()

@@ -14,13 +14,8 @@ class Topic extends Model
         'order',
     ];
 
-    public function providers()
+    public function paths()
     {
-        return $this->hasMany(Provider::class);
-    }
-
-    public function topic_aliases()
-    {
-        return $this->hasMany(TopicAlias::class);
+        return $this->belongsToMany(Path::class);
     }
 }
