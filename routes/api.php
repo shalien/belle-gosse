@@ -61,34 +61,34 @@ Route::middleware('auth:sanctum')
             Route::get('/{search}/topic', 'showSearchTopic');
             Route::get('/{search}/supplier', 'showSearchSupplier');
             Route::get('/{search}/path', 'showSearchPath');
-
-            Route::controller(PathController::class)->prefix('paths')->group(function () {
-                Route::get('/{path}/sources', 'showPathSources');
-                Route::get('/{path}/topics', 'showPathTopics');
-                Route::get('/{path}/suppliers', 'showPathSuppliers');
-                Route::get('/content/{content}', 'showByContent');
-            });
-
-            Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
-                Route::get('/{supplier}/searches', 'showSupplierSearches');
-                Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
-            });
-
-            Route::controller(ProviderTypeController::class)->prefix('provider_types')->group(function () {
-                Route::get('/{provider_type}/suppliers', 'showProviderTypeSuppliers');
-            });
-
-            Route::controller(PathController::class)->prefix('paths')->group(function () {
-                Route::get('/{path}/searches', 'showPathSearches');
-            });
-
-            Route::controller(SourceController::class)->prefix('sources')->group(
-                function () {
-                    Route::get('/link/{url}', 'showByLink');
-                    Route::get('/{source}/medias', 'showWithMedias');
-                    Route::get('/destination/{filename}', 'showByFilename');
-                    Route::get('/{source}/search', 'showSourceSearch');
-                }
-            );
         });
+
+        Route::controller(PathController::class)->prefix('paths')->group(function () {
+            Route::get('/{path}/sources', 'showPathSources');
+            Route::get('/{path}/topics', 'showPathTopics');
+            Route::get('/{path}/suppliers', 'showPathSuppliers');
+            Route::get('/content/{content}', 'showByContent');
+        });
+
+        Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
+            Route::get('/{supplier}/searches', 'showSupplierSearches');
+            Route::get('/{supplier}/provider_type', 'showSupplierProviderType');
+        });
+
+        Route::controller(ProviderTypeController::class)->prefix('provider_types')->group(function () {
+            Route::get('/{provider_type}/suppliers', 'showProviderTypeSuppliers');
+        });
+
+        Route::controller(PathController::class)->prefix('paths')->group(function () {
+            Route::get('/{path}/searches', 'showPathSearches');
+        });
+
+        Route::controller(SourceController::class)->prefix('sources')->group(
+            function () {
+                Route::get('/link/{url}', 'showByLink');
+                Route::get('/{source}/medias', 'showWithMedias');
+                Route::get('/destination/{filename}', 'showByFilename');
+                Route::get('/{source}/search', 'showSourceSearch');
+            }
+        );
     });
